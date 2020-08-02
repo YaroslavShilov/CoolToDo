@@ -2,57 +2,52 @@
   "lists": [
     {
       "id": 1,
-      "name": "Продажи",
+      "name": "Shopping",
       "colorId": 5
     },
     {
       "id": 2,
-      "name": "Фронтенд",
+      "name": "FrontEnd",
       "colorId": 4
     },
     {
       "id": 3,
-      "name": "Фильмы и сериалы",
+      "name": "Movies",
       "colorId": 3
     },
     {
       "id": 4,
-      "name": "Книги",
+      "name": "Books",
       "colorId": 2
     },
     {
       "id": 5,
-      "name": "Личное",
+      "name": "Personal",
       "colorId": 1
     },
     {
-      "name": "Спорт",
+      "name": "Sport",
       "colorId": 3,
       "id": 6
     },
-    {
-      "name": "Курс по ReactJS ToDo",
-      "colorId": 7,
-      "id": 7
-    }
   ],
   "tasks": [
     {
       "id": 1,
       "listId": 2,
-      "text": "Изучить JavaScript",
+      "text": "Learn JavaScript",
       "completed": true
     },
     {
       "id": 2,
       "listId": 2,
-      "text": "Изучить паттерны проектирования",
+      "text": "Learn Patterns",
       "completed": false
     },
     {
       "id": 3,
       "listId": 2,
-      "text": "ReactJS Hooks (useState, useReducer, useEffect и т.д.)",
+      "text": "ReactJS Hooks (more deep)",
       "completed": true
     },
     {
@@ -93,7 +88,7 @@
     },
     {
       "listId": 4,
-      "text": "Купить 1984!",
+      "text": "buy 1984!",
       "completed": true,
       "id": 10
     },
@@ -105,19 +100,19 @@
     },
     {
       "listId": 7,
-      "text": "Сделали сайдбар",
+      "text": "Sidebar is done",
       "completed": true,
       "id": 15
     },
     {
       "listId": 7,
-      "text": "Сделали список задач",
+      "text": "List is done",
       "completed": true,
       "id": 16
     },
     {
       "listId": 7,
-      "text": "Сделали удаление и редактирование задач и списков",
+      "text": "Delete is don",
       "completed": true,
       "id": 17
     },
