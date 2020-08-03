@@ -1,20 +1,28 @@
 .list {
 	margin-bottom: 20px;
+	
+	/*BEGIN li */
 	li {
 		position: relative;
 		margin-bottom: 2px;
 		padding: 10px 12px 10px 34px;
 		cursor: pointer;
 		transition: all 0.5s ease;
+		
+		&:hover span {
+			opacity: 1;
+		}
 
 		&.active {
 			background: #fff;
 			border-radius: 4px;
 			box-shadow: 0 3px 10px rgba(#000, 0.04);
 		}
-		
+
 	}
-	
+	/*END li */
+
+	/*BEGIN .list -> &__icon*/
 	&__icon {
 		position: absolute;
 		top: 50%;
@@ -30,11 +38,7 @@
 		svg path {
 			fill: #7c7c7c;
 		}
-		&.__add {
-			path {
-				stroke: #7c7c7c;
-			}
-		}
+
 		&.__circle {
 			left: 16px;
 			width: 10px;
@@ -42,7 +46,17 @@
 			margin-top: -6px;
 			border-radius: 50%;
 		}
+		
+		&.__add {
+			&,
+			& + span {
+				opacity: 0.4;
+				transition: all 0.5s ease;
+			}
+		}
+		
+		
 	}
-	
+	/*END .list -> &__icon*/
 	
 }

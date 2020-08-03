@@ -1,14 +1,21 @@
 import React from 'react';
+
 import './List.scss'
 
-const List = ({items, isRemovable='false'}) => {
+const getModificator = item => item.modificator ? item.modificator : '';
+
+const List = ({items, isRemovable='false', onClick=null}) => {
+	
 	return (
 		<ul className="list">
 			
 			{
 				items.map(item => {
+					
 					const icon = item.icon
-						? <span className={`list__icon ${item.modificator}`}>{item.icon}</span>
+						? <span 
+								className={`list__icon ${getModificator(item)}`}
+							>{item.icon}</span>
 						: <span 
 								className={'list__icon __circle'}
 								style={{backgroundColor: item.color}}
@@ -18,9 +25,10 @@ const List = ({items, isRemovable='false'}) => {
 						<li 
 							key={item.name} 
 							className={item.active && 'active'}
+							onClick={onClick}
 						>
 							{icon}
-							{item.name}
+							<span>{item.name}</span>
 						</li>
 					)
 					

@@ -1,0 +1,16 @@
+.add-list {
+	position: relative;
+	
+	/*BEGIN .add-list -> &__popup*/
+	&__popup {
+		position: absolute;
+		top: 120%;
+		left: 0;
+		width: 235px;
+		height: 150px;
+		background: #fff;
+		border-radius: 10px;
+		box-shadow: 0 6px 10px rgba(#000, 0.05);
+	}
+	/*END .add-list -> &__popup*/
+}
