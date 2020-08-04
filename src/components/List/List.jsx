@@ -4,16 +4,13 @@ import './List.scss'
 import Badge from "../Badge/Badge";
 
 const List = ({items, isRemovable='false', onClick=null}) => {
-	
 	return (
 		<ul className="list">
-			
 			{
 				items.map(item => {
-					
 					return (
 						<li 
-							key={item.name} 
+							key={item.id} 
 							className={item.active && 'active'}
 							onClick={onClick}
 						>

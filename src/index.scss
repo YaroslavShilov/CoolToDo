@@ -81,4 +81,8 @@ code {
 	&:active {
 		background-color: darken(#4dd599, 10%);
 	}
+	&:disabled {
+		background-color: #efefef;
+		cursor: default;
+	}
 }

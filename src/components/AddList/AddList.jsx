@@ -5,14 +5,30 @@ import List from "../List/List";
 import './AddList.scss'
 import Badge from "../Badge/Badge";
 import CloseIcon from "../Icons/CloseIcon";
+import {randomId} from "../../utils";
 
-const AddList = ({colors}) => {
+const AddList = ({colors, onAdd}) => {
 	const [visiblePopup, setVisiblePopup] = useState(false)
 	const [selectedColor, selectColor] = useState(colors[0].id);
-
+	const [inputValue, setInputValue] = useState('');
+	
 	const showPopup = () => setVisiblePopup(true)
 	const hidePopup = () => setVisiblePopup(false)
+	const inputChangeHandler = e => setInputValue(e.target.value);
+	
+	const addList = () => {
+		onAdd({
+			id: randomId(),
+			name: inputValue,
+			colorId: selectedColor,
+			color: colors.find(color => color.id === selectedColor).hex
+		})
 
+		hidePopup()
+		setInputValue('')
+		selectColor(colors[0].id)
+	}
+	
 	return (
 		<div className={'add-list'}>
 			<List
@@ -21,7 +37,8 @@ const AddList = ({colors}) => {
 					{
 						modificator: '__add',
 						icon: <AddIcon/>,
-						name: 'Add list'
+						name: 'Add list',
+						id: randomId()
 					},
 				]}
 				isRemovable
@@ -30,10 +47,7 @@ const AddList = ({colors}) => {
 			{visiblePopup &&
 				<div className="add-list__popup">
 	
-					<div 
-						className="add-list__close"
-						onClick={hidePopup}
-					>
+					<div className="add-list__close" onClick={hidePopup}>
 						<CloseIcon/>
 					</div>
 	
@@ -41,19 +55,28 @@ const AddList = ({colors}) => {
 						className={'field'}
 						type="text"
 						placeholder={'Name of list'}
+						value={inputValue}
+						onChange={inputChangeHandler}
 					/>
+					
 					<ul className="add-list__colors">
-						{colors.map(item => (
-							<li
-								key={item.id}
-								onClick={() => selectColor(item.id)}
-								className={item.id === selectedColor ? 'active' : ''}
-							>
-								<Badge color={item.hex}/>
-							</li>
-						))}
+						{colors.map(
+							item => (
+								<li
+									key={item.id}
+									onClick={() => selectColor(item.id)}
+									className={item.id === selectedColor ? 'active' : ''}
+								>
+									<Badge color={item.hex}/>
+								</li>
+							))
+						}
 					</ul>
-					<button className={'button'}>Add</button>
+					<button 
+						className={'button'} 
+						onClick={addList}
+						disabled={!inputValue}
+					>Add</button>
 				</div>
 			}
 

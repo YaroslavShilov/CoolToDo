@@ -1,5 +1,5 @@
 .list {
-	margin-bottom: 20px;
+	margin-bottom: 15px;
 	
 	/*BEGIN li */
 	li {
@@ -8,7 +8,9 @@
 		padding: 10px 12px 10px 34px;
 		cursor: pointer;
 		transition: all 0.5s ease;
-		
+		&:hover {
+			background-color: rgba(#fff, 0.5);
+		}
 		&:hover span {
 			opacity: 1;
 		}

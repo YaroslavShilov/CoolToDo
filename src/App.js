@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import AddList from "./components/AddList/AddList";
 import TasksFolders from "./components/TasksFolders";
 
@@ -171,17 +171,28 @@ const DB = {
 	]
 }
 
+/**TODO: add gh-page **/
+/**TODO: add page 404 **/
+/**TODO: add delete button AddList if list too long **/
 
 function App() {
-	/**TODO: add gh-page **/
-	/**TODO: add page 404 **/	
+	const [lists, setLists] = useState(DB.lists.map(item => {
+		item.color = DB.colors.find(color => color.id === item.colorId).hex;
+		return item;
+	}))
 	
+	const onAddList = (obj) => {
+		setLists([...lists, obj])
+	}
 	
   return (
     <main className={'todo'}>
 	    <aside className="sidebar">
-		    <TasksFolders/>
-		    <AddList colors={DB.colors}/>
+		    <TasksFolders lists={lists}/>
+		    <AddList 
+			    colors={DB.colors}
+			    onAdd={onAddList}
+		    />
 	    </aside>
 	    <div className="tasks">
 		    Hello. I'm tasks
