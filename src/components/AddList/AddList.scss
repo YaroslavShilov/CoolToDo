@@ -1,16 +1,53 @@
 .add-list {
 	position: relative;
 	
+	&__close {
+		position: absolute;
+		top: -7px;
+		right: -7px;
+		cursor: pointer;
+		path {
+			transition: all 0.5s ease;
+		}
+		&:hover path {
+			fill: darken(#4dd599, 6%);
+		}
+		&:active path {
+			fill: darken(#4dd599, 10%);
+		}
+	}
+	
 	/*BEGIN .add-list -> &__popup*/
 	&__popup {
 		position: absolute;
 		top: 120%;
-		left: 0;
-		width: 235px;
-		height: 150px;
+		left: 10px;
+		width: 240px;
+		padding: 18px;
 		background: #fff;
 		border-radius: 10px;
 		box-shadow: 0 6px 10px rgba(#000, 0.05);
+		box-sizing: border-box;
+		.button {
+			width: 100%;
+			margin-top: 15px;
+		}
 	}
 	/*END .add-list -> &__popup*/
+	
+	&__colors {
+		display: flex;
+		justify-content: space-around;
+		padding-top: 12px;
+		li:hover .badge {
+			box-shadow: 0 0 1px 1px rgba(#000, 0.7);
+		}
+		li.active .badge{
+			box-shadow: 0 0 1px 1px #000;
+		}
+		.badge {
+			width: 18px;
+			height: 18px;
+		}
+	}
 }
