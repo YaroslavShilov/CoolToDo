@@ -1,13 +1,19 @@
 .list {
 	margin-bottom: 15px;
 	
+	$list: &;
 	/*BEGIN li */
 	li {
 		position: relative;
+		display: flex;
+		align-items: center;
 		margin-bottom: 2px;
 		padding: 10px 12px 10px 34px;
 		cursor: pointer;
 		transition: all 0.5s ease;
+		&>span {
+			flex: 1;
+		}
 		&:hover {
 			background-color: rgba(#fff, 0.5);
 		}
@@ -20,8 +26,20 @@
 			border-radius: 4px;
 			box-shadow: 0 3px 10px rgba(#000, 0.04);
 		}
+		&:hover #{$list}__close {
+			opacity: 0.2;
+		}
+		#{$list}__close:hover {
+			opacity: 0.7;
+		}
 	}
 	/*END li */
+	&__close {
+		position: relative;
+		top: 1px;
+		opacity: 0;
+		transition: all 0.5s ease;
+	}
 	
 	/*BEGIN .badge */
 	.badge {

@@ -17,6 +17,9 @@ const TasksFolders = ({lists}) => (
 		<List
 			items={lists}
 			isRemovable
+			onRemove={(id) => {
+				alert(id);
+			}}
 		/>
 	</>
 )

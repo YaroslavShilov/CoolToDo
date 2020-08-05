@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import AddList from "./components/AddList/AddList";
-import TasksFolders from "./components/TasksFolders";
+import Tasks from "./components/Tasks/Tasks";
+import Sidebar from "./components/Sidebar";
 
 const DB = {
 	"lists": [
@@ -187,16 +187,9 @@ function App() {
 	
   return (
     <main className={'todo'}>
-	    <aside className="sidebar">
-		    <TasksFolders lists={lists}/>
-		    <AddList 
-			    colors={DB.colors}
-			    onAdd={onAddList}
-		    />
-	    </aside>
-	    <div className="tasks">
-		    Hello. I'm tasks
-	    </div>
+	    <Sidebar lists={lists} colors={DB.colors} onAddList={onAddList}/>
+	    
+	    <Tasks />
     </main>
   );
 }

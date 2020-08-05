@@ -1,9 +1,14 @@
 import React from 'react';
+import Badge from "../Badge/Badge";
+import RemoveIcon from "../Icons/RemoveIcon";
 
 import './List.scss'
-import Badge from "../Badge/Badge";
 
-const List = ({items, isRemovable='false', onClick=null}) => {
+const List = ({items, isRemovable, onRemove, onClick}) => {
+	const removeList = (id) => {
+		if(window.confirm('Do you really want to delete this list?')) onRemove(id)
+	}
+	
 	return (
 		<ul className="list">
 			{
@@ -20,6 +25,12 @@ const List = ({items, isRemovable='false', onClick=null}) => {
 								color={item.color}
 							/>
 							<span>{item.name}</span>
+							{isRemovable &&
+								<div className="list__close" onClick={() => removeList(item.id)}>
+									<RemoveIcon/>
+								</div>
+							}
+							
 						</li>
 					)
 					

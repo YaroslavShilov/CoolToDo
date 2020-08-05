@@ -13,7 +13,11 @@ const AddList = ({colors, onAdd}) => {
 	const [inputValue, setInputValue] = useState('');
 	
 	const showPopup = () => setVisiblePopup(true)
-	const hidePopup = () => setVisiblePopup(false)
+	const hidePopup = () => {
+		setVisiblePopup(false)
+		setInputValue('')
+		selectColor(colors[0].id)
+	}
 	const inputChangeHandler = e => setInputValue(e.target.value);
 	
 	const addList = () => {
@@ -23,10 +27,7 @@ const AddList = ({colors, onAdd}) => {
 			colorId: selectedColor,
 			color: colors.find(color => color.id === selectedColor).hex
 		})
-
 		hidePopup()
-		setInputValue('')
-		selectColor(colors[0].id)
 	}
 	
 	return (
@@ -41,7 +42,6 @@ const AddList = ({colors, onAdd}) => {
 						id: randomId()
 					},
 				]}
-				isRemovable
 			/>
 
 			{visiblePopup &&
