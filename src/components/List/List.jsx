@@ -1,12 +1,20 @@
 import React from 'react';
 import Badge from "../Badge/Badge";
 import RemoveIcon from "../Icons/RemoveIcon";
+import axios from 'axios';
 
 import './List.scss'
 
 const List = ({items, isRemovable, onRemove, onClick}) => {
 	const removeList = (id) => {
-		if(window.confirm('Do you really want to delete this list?')) onRemove(id)
+		if(window.confirm('Do you really want to delete this list?')) {
+			axios
+				.delete(`http://localhost:3001/lists/${id}`)
+				.then(() => {
+					onRemove(id)
+				})
+			
+		}
 	}
 	
 	return (

@@ -1,33 +1,46 @@
 import React, {useState} from 'react';
-import AddIcon from "../Icons/AddIcon";
-import List from "../List/List";
+import axios from 'axios';
 
 import './AddList.scss'
+
 import Badge from "../Badge/Badge";
 import CloseIcon from "../Icons/CloseIcon";
 import {randomId} from "../../utils";
+import AddIcon from "../Icons/AddIcon";
+import List from "../List/List";
 
 const AddList = ({colors, onAdd}) => {
+	
 	const [visiblePopup, setVisiblePopup] = useState(false)
 	const [selectedColor, selectColor] = useState(colors[0].id);
 	const [inputValue, setInputValue] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 	
 	const showPopup = () => setVisiblePopup(true)
 	const hidePopup = () => {
 		setVisiblePopup(false)
 		setInputValue('')
 		selectColor(colors[0].id)
+		setIsLoading(false)
 	}
 	const inputChangeHandler = e => setInputValue(e.target.value);
 	
 	const addList = () => {
-		onAdd({
-			id: randomId(),
-			name: inputValue,
-			colorId: selectedColor,
-			color: colors.find(color => color.id === selectedColor).hex
-		})
-		hidePopup()
+		setIsLoading(true)
+		axios
+			.post('http://localhost:3001/lists', {
+				name: inputValue,
+				colorId: selectedColor
+			})
+			.then(({data}) => {
+				onAdd({
+					...data,
+					color: colors.find(color => color.id === selectedColor).hex
+				});
+			})
+			.finally( () => {
+				hidePopup()
+			})
 	}
 	
 	return (
@@ -75,8 +88,10 @@ const AddList = ({colors, onAdd}) => {
 					<button 
 						className={'button'} 
 						onClick={addList}
-						disabled={!inputValue}
-					>Add</button>
+						disabled={!inputValue || isLoading}
+					>
+						{isLoading ? 'Loading...' : 'Add'}
+					</button>
 				</div>
 			}
 

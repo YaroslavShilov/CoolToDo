@@ -30,6 +30,16 @@
       "colorId": 3,
       "id": 6
     },
+    {
+      "name": "ddd",
+      "colorId": 3,
+      "id": 7
+    },
+    {
+      "name": "asdf",
+      "colorId": 6,
+      "id": 9
+    }
   ],
   "tasks": [
     {
@@ -115,12 +125,6 @@
       "text": "Delete is don",
       "completed": true,
       "id": 17
-    },
-    {
-      "listId": 8,
-      "text": "tttt",
-      "completed": false,
-      "id": 18
     }
   ],
   "colors": [

@@ -21,8 +21,8 @@ const Tasks = () => {
 							<CheckIcon/>
 						</label>
 					</div>
-					<input type="text" value={'ReactJS learn'}/>
-					{/*//<p>ReactJS learn</p>*/}
+					{/*<input type="text" value={'ReactJS learn'}/>*/}
+					<p>ReactJS learn</p>
 				</li>
 			</ul>
 			
