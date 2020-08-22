@@ -1,6 +1,7 @@
 .tasks {
 	flex: 1;
 	padding: 58px;
+	position: relative;
 	&__title {
 		padding-bottom: 20px;
 		border-bottom: 1px solid #f2f2f2;
@@ -21,12 +22,22 @@
 			transition: all 0.5s ease;
 		}
 	}
+	&__empty {
+		position: absolute;
+		top: 52%;
+		left: 0;
+		width: 100%;
+		font: bold 24px Montserrat;
+		color: #c9d1d3;
+		text-align: center;
+	}
 	
 	&__items {
 		padding-top: 30px;
 		li {
 			display: flex;
 			align-items: center;
+			margin-bottom: 15px;
 		}
 		input {
 			border: 0;
@@ -86,4 +97,36 @@
 		
 	}
 	/*END .checkbox */
+	
+	/*BEGIN .tasks -> &__form*/
+	&__form {
+	  &-new {
+		  display: inline-flex;
+		  align-items: center;
+		  padding-top: 10px;
+		  padding-left: 3px;
+		  cursor: pointer;
+		  opacity: .4;
+		  transition: all 0.5s ease;
+	  }
+		&-new:hover {
+			opacity: .8;
+		}
+		svg {
+			width: 16px;
+			height: 16px;
+		}
+		p {
+			margin-left: 19px;
+			padding-top: 2px;
+			font-size: 16px;
+		}
+		&-block {
+			.button {
+				margin-top: 15px;
+				margin-right: 10px;
+			}
+		}
+	}
+	/*END .tasks -> &__form*/
 }

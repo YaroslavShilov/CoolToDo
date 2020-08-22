@@ -8,11 +8,24 @@
 		display: flex;
 		align-items: center;
 		margin-bottom: 2px;
-		padding: 10px 12px 10px 34px;
+		padding: 10px 10px 10px 34px;
 		cursor: pointer;
 		transition: all 0.5s ease;
+		strong {
+			display: inline-block;
+			padding: 2px 4px;
+			background-color: lighten(#4dd599, 25%);
+			margin-right: 8px;
+			font-size: 12px;
+			font-weight: normal;
+			border-radius: 10px;
+		}
 		&>span {
 			flex: 1;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			max-width: 120px;
+			white-space: nowrap;
 		}
 		&:hover {
 			background-color: rgba(#fff, 0.5);

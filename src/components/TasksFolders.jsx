@@ -3,7 +3,7 @@ import ListIcon from "./Icons/ListIcon";
 import List from "./List/List";
 import {randomId} from "../utils";
 
-const TasksFolders = ({lists, onRemove}) => (
+const TasksFolders = ({lists, onRemove, onClickItem, activeItem}) => (
 	<>
 		<List
 			items={[
@@ -18,6 +18,8 @@ const TasksFolders = ({lists, onRemove}) => (
 			items={lists}
 			isRemovable
 			onRemove={onRemove}
+			onClickItem={onClickItem}
+			activeItem={activeItem}
 		/>
 	</>
 )

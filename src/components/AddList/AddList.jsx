@@ -30,7 +30,8 @@ const AddList = ({colors, onAdd}) => {
 		axios
 			.post('http://localhost:3001/lists', {
 				name: inputValue,
-				colorId: selectedColor
+				colorId: selectedColor,
+				tasks: []
 			})
 			.then(({data}) => {
 				onAdd({
@@ -46,7 +47,7 @@ const AddList = ({colors, onAdd}) => {
 	return (
 		<div className={'add-list'}>
 			<List
-				onClick={showPopup}
+				onClickItem={showPopup}
 				items={[
 					{
 						modificator: '__add',

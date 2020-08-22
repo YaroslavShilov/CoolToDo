@@ -29,16 +29,6 @@
       "name": "Sport",
       "colorId": 3,
       "id": 6
-    },
-    {
-      "name": "ddd",
-      "colorId": 3,
-      "id": 7
-    },
-    {
-      "name": "asdf",
-      "colorId": 6,
-      "id": 9
     }
   ],
   "tasks": [
@@ -107,24 +97,6 @@
       "text": "222",
       "completed": true,
       "id": 12
-    },
-    {
-      "listId": 7,
-      "text": "Sidebar is done",
-      "completed": true,
-      "id": 15
-    },
-    {
-      "listId": 7,
-      "text": "List is done",
-      "completed": true,
-      "id": 16
-    },
-    {
-      "listId": 7,
-      "text": "Delete is don",
-      "completed": true,
-      "id": 17
     }
   ],
   "colors": [

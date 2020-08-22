@@ -57,6 +57,7 @@ code {
 	border: 1px solid #efefef;
 	border-radius: 4px;
 	box-sizing: border-box;
+	font-size: 14px;
 	&:focus,
 	&:hover {
 		border-color: #dbdbdb;
@@ -64,14 +65,15 @@ code {
 }
 
 .button {
-	padding: 10px 20px;
+	padding: 10px 20px 9px;
 	background-color: #4dd599;
 	border-radius: 4px;
 	border: none;
+	font-size: 14px;
 	color: #fff;
 	text-align: center;
 	&:hover {
-		background-color: darken(#4dd599, 6%);
+		background-color: darken(#4dd599, 8%);
 	}
 	&:active {
 		background-color: darken(#4dd599, 10%);
@@ -79,5 +81,15 @@ code {
 	&:disabled {
 		background-color: #efefef;
 		cursor: default;
+	}
+	&.__grey {
+		background-color: #f4f6f8;
+		color: #444;
+		&:hover {
+			background-color: darken(#f4f6f8, 4%);
+		}
+		&:active {
+			background-color: darken(#f4f6f8, 8%);
+		}
 	}
 }
