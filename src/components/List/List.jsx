@@ -17,12 +17,13 @@ const List = ({items, isRemovable, onRemove, onClickItem, activeItem}) => {
 			
 		}
 	}
-	
+
 	return (
 		<ul className="list">
 			{
 				items.map(item => {
 					const isActive = activeItem ? (activeItem.id === item.id ? 'active' : null) : null
+					
 					return (
 						<li 
 							key={item.id} 

@@ -15,7 +15,7 @@ function App() {
 	
 	const [lists, setLists] = useState(null);
 	const [colors, setColors] = useState(null);
-	const [activeItem, setActiveItem] = useState(null)
+	const [activeItem, setActiveItem] = useState({id: 'all'})
 
 	useEffect(() => {
 		axios.get('http://localhost:3001/lists?_expand=color&_embed=tasks').then(({data}) => {
@@ -73,7 +73,7 @@ function App() {
 		    : 'Loading...'
 	    }
 
-	    {lists && activeItem && 
+	    {lists && activeItem.id !== 'all' && 
 		    <Tasks 
 			    list={activeItem} 
 			    onEditTitle={onEditTitle}

@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
+import axios from 'axios';
 import AddIcon from "../Icons/AddIcon";
 
 export const AddTaskForm = ({list, onAddTask}) => {
 	
 	const [visibleForm, setVisibleForm] = useState(false)
 	const [inputValue, setInputValue] = useState('')
+	const [isLoading, setIsLoading] = useState(false)
 	
 	const toggleFormVisible = () => {
 		setVisibleForm(!visibleForm);
@@ -21,8 +23,21 @@ export const AddTaskForm = ({list, onAddTask}) => {
 			'text': inputValue,
 			'completed': false
 		}
-		onAddTask(list.id, task)
-		toggleFormVisible()
+		setIsLoading(true);
+		
+		axios.post('http://localhost:3001/tasks', task).then(({data}) => {
+			onAddTask(list.id, data)
+			toggleFormVisible()
+			
+		})
+		.catch(() => {
+			alert('Sorry, We weren\'t able to add this task')
+		})
+		.finally(() => {
+			setIsLoading(false);
+		})
+		
+		
 	}
 	
 	
@@ -45,19 +60,20 @@ export const AddTaskForm = ({list, onAddTask}) => {
 						<button
 							className={'button'}
 							onClick={addTask}
-							disabled={!inputValue}
+							disabled={!inputValue || isLoading}
 						>
-							{/*{isLoading ? 'Loading...' : 'Add'}*/}
-							Add
+							{isLoading ? 'Loading...' : 'Add'}
 						</button>
-						<button
-							className={'button __grey'}
-							//disabled={!inputValue || isLoading}
-							onClick={toggleFormVisible}
-						>
-							{/*{isLoading ? 'Loading...' : 'Cancel'}*/}
-							Cancel
-						</button>
+						{!isLoading &&
+							<button
+								className={'button __grey'}
+								disabled={isLoading}
+								onClick={toggleFormVisible}
+							>
+								Cancel
+							</button>
+						}
+						
 					</div>			
 			}
 		</div>
