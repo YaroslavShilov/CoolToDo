@@ -1,7 +1,7 @@
 .tasks {
-	flex: 1;
-	padding: 58px;
-	position: relative;
+	&:not(:last-child) {
+		padding-bottom: 58px;
+	}
 	&__title {
 		padding-bottom: 20px;
 		border-bottom: 1px solid #f2f2f2;
@@ -42,6 +42,29 @@
 		input {
 			border: 0;
 			font-size: 16px;
+		}
+	}
+
+	&__actions {
+		display: flex;
+		opacity: 0;
+		transition: opacity 0.15s ease;
+		div {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 32px;
+			height: 32px;
+			background-color: lighten(#f4f6f8, 2%);
+			border-radius: 6px;
+			margin-left: 5px;
+			cursor: pointer;
+		}
+		div:hover {
+			background-color: darken(#f4f6f8, 2%);
+			svg {
+				opacity: 0.8;
+			}
 		}
 	}
 	
@@ -107,7 +130,7 @@
 		  padding-left: 3px;
 		  cursor: pointer;
 		  opacity: .4;
-		  transition: all 0.5s ease;
+		  transition: opacity 0.5s ease;
 	  }
 		&-new:hover {
 			opacity: .8;

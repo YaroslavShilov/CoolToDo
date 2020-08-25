@@ -36,11 +36,18 @@ code {
 	align-items: stretch;
 	width: 750px;
 	min-height: 530px;
+	max-height: 580px;
 	margin: 20px;
 	font-size: 14px;
 	border-radius: 10px;
 	border: 1px solid #f1f1f1;
 	box-shadow: 1px 2px 20px #f3f3f3;
+	&__tasks {
+		flex: 1;
+		padding: 58px;
+		position: relative;
+		overflow: auto;
+	}
 }
 
 .sidebar {

@@ -29,6 +29,30 @@
       "name": "Sport",
       "colorId": 3,
       "id": 6
+    },
+    {
+      "name": "d",
+      "colorId": 1,
+      "tasks": [],
+      "id": 7
+    },
+    {
+      "name": "df",
+      "colorId": 1,
+      "tasks": [],
+      "id": 8
+    },
+    {
+      "name": "dafsdf",
+      "colorId": 5,
+      "tasks": [],
+      "id": 9
+    },
+    {
+      "name": "фыва",
+      "colorId": 4,
+      "tasks": [],
+      "id": 10
     }
   ],
   "tasks": [
@@ -133,6 +157,12 @@
       "text": "фывафыва",
       "completed": false,
       "id": 18
+    },
+    {
+      "listId": 2,
+      "text": "ddd",
+      "completed": false,
+      "id": 19
     }
   ],
   "colors": [

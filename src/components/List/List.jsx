@@ -5,8 +5,8 @@ import axios from 'axios';
 
 import './List.scss'
 
-const List = ({items, isRemovable, onRemove, onClickItem, activeItem}) => {
-	
+const List = ({items, isRemovable, onRemove, onClickList, activeList}) => {
+
 	const removeList = (id) => {
 		if(window.confirm('Do you really want to delete this list?')) {
 			axios
@@ -22,13 +22,13 @@ const List = ({items, isRemovable, onRemove, onClickItem, activeItem}) => {
 		<ul className="list">
 			{
 				items.map(item => {
-					const isActive = activeItem ? (activeItem.id === item.id ? 'active' : null) : null
+					const isActive = activeList ? (activeList.id === item.id ? 'active' : null) : null
 					
 					return (
 						<li 
 							key={item.id} 
 							className={isActive}
-							onClick={onClickItem ? () => onClickItem(item) : null}
+							onClick={onClickList ? () => onClickList(item) : null}
 						>
 							<Badge
 								icon={item.icon}

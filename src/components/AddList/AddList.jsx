@@ -47,7 +47,7 @@ const AddList = ({colors, onAdd}) => {
 	return (
 		<div className={'add-list'}>
 			<List
-				onClickItem={showPopup}
+				onClickList={showPopup}
 				items={[
 					{
 						modificator: '__add',

@@ -2,7 +2,7 @@ import React from 'react';
 import ListIcon from "./Icons/ListIcon";
 import List from "./List/List";
 
-const TasksFolders = ({lists, onRemove, onClickItem, activeItem}) => (
+const TasksFolders = ({lists, onRemove, activeList, onClickList}) => (
 	<>
 		<List
 			items={[
@@ -12,15 +12,15 @@ const TasksFolders = ({lists, onRemove, onClickItem, activeItem}) => (
 					name: "All tasks"
 				}
 			]}
-			activeItem={activeItem}
-			onClickItem={onClickItem}
+			activeList={activeList}
+			onClickList={() => onClickList('', 'all')}
 		/>
 		<List
 			items={lists}
 			isRemovable
 			onRemove={onRemove}
-			onClickItem={onClickItem}
-			activeItem={activeItem}
+			onClickList={onClickList}
+			activeList={activeList}
 		/>
 	</>
 )
