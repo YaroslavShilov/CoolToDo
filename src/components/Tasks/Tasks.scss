@@ -33,32 +33,72 @@
 	}
 	
 	&__items {
-		padding-top: 30px;
+		padding-top: 25px;
 		li {
 			display: flex;
 			align-items: center;
-			margin-bottom: 15px;
+			margin-bottom: 10px;
 		}
 		input {
-			border: 0;
+			flex: 1;
 			font-size: 16px;
+			border: 1px solid darken(#f4f6f8, 10%);
+			padding: 5px;
 		}
+		input:read-only {
+			border-color: transparent;
+		}
+	}
+	&__items li:hover &__actions,
+	&__items li.active &__actions {
+		opacity: 1;
 	}
 
 	&__actions {
 		display: flex;
 		opacity: 0;
-		transition: opacity 0.15s ease;
+		transition: opacity 0.5s ease;
 		div {
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			width: 32px;
-			height: 32px;
+			width: 28px;
+			height: 28px;
 			background-color: lighten(#f4f6f8, 2%);
 			border-radius: 6px;
 			margin-left: 5px;
 			cursor: pointer;
+			transition: all 0.5s ease;
+		}
+		div.edit {
+			background-color: lighten(#4dd599, 8%);
+			&:hover {
+				background-color: lighten(#4dd599, 2%);
+			}
+		}
+		div.remove {
+			background-color: lighten(tomato, 8%);
+			&:hover {
+				background-color: lighten(tomato, 2%);
+			}
+		}
+		div.edit,
+		div.remove {
+			svg {
+				opacity: 1;
+			}
+			path {
+				fill: white;
+			}
+		}
+		svg {
+			width: 12px;
+			height: 12px;
+			opacity: 0.4;
+			transition: all 0.5s ease;
+		}
+		path {
+			fill: black;
 		}
 		div:hover {
 			background-color: darken(#f4f6f8, 2%);
@@ -70,7 +110,7 @@
 	
 	/*BEGIN .checkbox */
 	.checkbox {
-		margin-right: 14px;
+		margin-right: 10px;
 		input {
 			display: none;
 		}
@@ -82,7 +122,7 @@
 				opacity: 1;
 			}
 			path {
-				stroke: #fff;
+				fill: #fff;
 			}
 			&:hover {
 				border-color: darken(#4dd599, 10%);
@@ -110,11 +150,13 @@
 		}
 		
 		svg {
+			width: 12px;
+			height: 12px;
 			opacity: 0;
 			transition: all 0.5s ease;
 		}
 		path {
-			stroke: #b2b2b2;
+			fill: #b2b2b2;
 			transition: all 0.5s ease;
 		}
 		

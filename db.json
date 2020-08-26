@@ -105,12 +105,6 @@
       "id": 8
     },
     {
-      "listId": 1,
-      "text": "123",
-      "completed": false,
-      "id": 9
-    },
-    {
       "listId": 4,
       "text": "buy 1984!",
       "completed": true,
@@ -121,36 +115,6 @@
       "text": "222",
       "completed": true,
       "id": 12
-    },
-    {
-      "listId": 1,
-      "text": "вввв",
-      "completed": false,
-      "id": 13
-    },
-    {
-      "listId": 1,
-      "text": "ввв",
-      "completed": false,
-      "id": 14
-    },
-    {
-      "listId": 1,
-      "text": "фывафыва",
-      "completed": false,
-      "id": 15
-    },
-    {
-      "listId": 1,
-      "text": "фыва",
-      "completed": false,
-      "id": 16
-    },
-    {
-      "listId": 1,
-      "text": "фыафыа",
-      "completed": false,
-      "id": 17
     },
     {
       "listId": 6,

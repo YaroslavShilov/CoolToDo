@@ -1,13 +1,13 @@
 import React from 'react';
-import TasksFolders from "./TasksFolders";
+import Lists from "./Lists";
 import AddList from "./AddList/AddList";
 
-const Sidebar = ({lists, colors, onAddList, onRemove, activeList, onClickList}) => {
+const Sidebar = ({lists, colors, onAddList, onRemoveList, activeList, onClickList}) => {
 	return (
 		<aside className="sidebar">
-			<TasksFolders 
-				lists={lists} 
-				onRemove={onRemove}
+			<Lists
+				lists={lists}
+				onRemoveList={onRemoveList}
 				activeList={activeList}
 				onClickList={onClickList}
 			/>

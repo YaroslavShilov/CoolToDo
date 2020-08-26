@@ -29,10 +29,34 @@ function App() {
 		})
 	}, [])
 
+
+
+	//BEGIN List handlers
 	const onAddList = (obj) => {
 		setLists([...lists, obj])
 	}
 
+	const onClickList = (list, modif ) => {
+		if(modif === 'all') history.push('/')
+		else history.push(`/lists/${list.id}`);
+	}
+
+	const onRemoveList = (id) => {
+		setLists(lists.filter(item => item.id !== id))
+	}
+
+	const onEditListTitle = (id, title) => {
+		const newList = lists.map(list => {
+			if (list.id === id) list.name = title;
+			return list
+		})
+		setLists(newList)
+	}
+	//END List handlers
+
+
+
+	//BEGIN Task handlers
 	const onAddTask = (listId, taskObj) => {
 		const newList = lists.map(item => {
 			if (item.id === listId) item.tasks = [...item.tasks, taskObj];
@@ -41,23 +65,21 @@ function App() {
 		setLists(newList)
 	}
 
-	const onRemove = (id) => {
-		setLists(lists.filter(item => item.id !== id))
-	}
-
-	const onEditTitle = (id, title) => {
+	const onRemoveTask = (listId, taskId) => {
 		const newList = lists.map(list => {
-			if (list.id === id) list.name = title;
+			if(list.id ===  listId) {
+				list.tasks = list.tasks.filter(task => task.id !== taskId);
+			}
 			return list
 		})
-		setLists(newList)
-	}
 
-	const onClickList = (list, modif ) => {
-		if(modif === 'all') history.push('/')
-		else history.push(`/lists/${list.id}`);
-	}
+		setLists(newList);
 
+		axios.delete('http://localhost:3001/tasks/' + taskId).catch(() => {
+			alert('something is wrong. I cannot delete this task')
+		})
+	}
+	//END Task handlers
 
 
 	useEffect(() => {
@@ -79,7 +101,7 @@ function App() {
 					lists={lists}
 					colors={colors}
 					onAddList={onAddList}
-					onRemove={onRemove}
+					onRemoveList={onRemoveList}
 					activeList={activeList}
 					onClickList={onClickList}
 				/>
@@ -92,9 +114,10 @@ function App() {
 							<Tasks
 								key={list.id}
 								list={list}
-								onEditTitle={onEditTitle}
+								onEditListTitle={onEditListTitle}
 								onAddTask={onAddTask}
 								withoutEmpty
+								onRemoveTask={onRemoveTask}
 							/>
 						)
 					}
@@ -105,8 +128,9 @@ function App() {
 					{lists && activeList &&
 						<Tasks
 							list={activeList}
-							onEditTitle={onEditTitle}
+							onEditListTitle={onEditListTitle}
 							onAddTask={onAddTask}
+							onRemoveTask={onRemoveTask}
 						/>
 					}
 				</Route>

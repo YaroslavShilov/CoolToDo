@@ -8,12 +8,12 @@ import {AddTaskForm} from "./AddTaskForm";
 import {Task} from "./Task";
 
 
-const Tasks = ({list, onEditTitle, onAddTask, withoutEmpty}) => {
+const Tasks = ({list, onEditListTitle, onAddTask, withoutEmpty, onRemoveTask}) => {
 	
 	const editTitle = () => {
 		const newTitle = window.prompt('Write a new name', list.name)
 		if(newTitle) {
-			onEditTitle(list.id, newTitle)
+			onEditListTitle(list.id, newTitle)
 			axios.patch('http://localhost:3001/lists/' + list.id, {
 				name: newTitle
 			}).catch(() => {
@@ -37,7 +37,13 @@ const Tasks = ({list, onEditTitle, onAddTask, withoutEmpty}) => {
 				
 				{
 					list.tasks.map(({id, text, completed}) =>
-						<Task key={id} id={id} text={text} completed={completed}/>
+						<Task
+							key={id}
+							id={id}
+							text={text}
+							completed={completed}
+							onRemoveTask={() => onRemoveTask(list.id, id)}
+						/>
 					)
 				}
 				
