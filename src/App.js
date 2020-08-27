@@ -3,14 +3,16 @@ import Tasks from "./components/Tasks/Tasks";
 import Sidebar from "./components/Sidebar";
 import axios from 'axios';
 import {Route, useHistory, useLocation} from "react-router-dom";
+import {defaultDB} from "./components/defaultDB";
 
 /**TODO: add gh-page **/
 /**TODO: add page 404 **/
 /**TODO: add delete button AddList if list too long **/
-
-/**TODO: add color of title **/
 /**TODO: add loader**/
+/**TODO: add default database**/
+/**TODO: add firebase**/
 
+const URL = "https://cooltodo-f7d10.firebaseio.com";
 function App() {
 	let history = useHistory();
 	let location = useLocation();
@@ -18,6 +20,13 @@ function App() {
 	const [lists, setLists] = useState(null);
 	const [colors, setColors] = useState(null);
 	const [activeList, setActiveList] = useState(null)
+
+
+	const onDefaultDB = () => {
+		axios.get(`${URL}/history.json`).then(({data}) => {
+			console.log(data)
+		})
+	}
 
 	useEffect(() => {
 		axios.get('http://localhost:3001/lists?_expand=color&_embed=tasks').then(({data}) => {
@@ -32,8 +41,24 @@ function App() {
 
 
 	//BEGIN List handlers
-	const onAddList = (obj) => {
-		setLists([...lists, obj])
+	const onAddList = (title, colorId, finished) => {
+		axios
+			.post('http://localhost:3001/lists', {
+				name: title,
+				colorId: colorId,
+				tasks: []
+			})
+			.then(({data}) => {
+				const newList = {
+					...data,
+					color: colors.find(color => color.id === colorId).hex
+				}
+				setLists([...lists, newList])
+				history.push(`/lists/${newList.id}`);
+			})
+			.finally( () => {
+				finished()
+			})
 	}
 
 	const onClickList = (list, modif ) => {
@@ -43,6 +68,7 @@ function App() {
 
 	const onRemoveList = (id) => {
 		setLists(lists.filter(item => item.id !== id))
+		history.push('/')
 	}
 
 	const onEditListTitle = (id, title) => {
@@ -79,6 +105,38 @@ function App() {
 			alert('something is wrong. I cannot delete this task')
 		})
 	}
+
+	const onEditTask = (listId, taskId, value) => {
+		const newList = lists.map(list => {
+			if(list.id === listId) {
+				list.tasks.find(task => task.id === taskId).text = value;
+			}
+			return list
+		})
+		setLists(newList)
+
+		axios.patch(`http://localhost:3001/tasks/${taskId}`, {
+			text: value
+		}).catch(() => {
+			alert('something is wrong. I cannot change the text of task')
+		})
+	}
+
+	const onCheckTask = (listId, taskId, completed) => {
+		const newList = lists.map(list => {
+			if(list.id === listId) {
+				list.tasks.find(task => task.id === taskId).completed = completed;
+			}
+			return list
+		})
+		setLists(newList);
+
+		axios.patch(`http://localhost:3001/tasks/${taskId}`, {
+			completed
+		}).catch(() => {
+			alert('something is wrong. I cannot tick the task')
+		})
+	}
 	//END Task handlers
 
 
@@ -96,6 +154,7 @@ function App() {
 
 	return (
 		<main className={'todo'}>
+			<button onClick={onDefaultDB}>Click here for test</button>
 			{lists && colors
 				? <Sidebar
 					lists={lists}
@@ -116,8 +175,10 @@ function App() {
 								list={list}
 								onEditListTitle={onEditListTitle}
 								onAddTask={onAddTask}
-								withoutEmpty
 								onRemoveTask={onRemoveTask}
+								onEditTask={onEditTask}
+								onCheckTask={onCheckTask}
+								withoutEmpty
 							/>
 						)
 					}
@@ -131,6 +192,8 @@ function App() {
 							onEditListTitle={onEditListTitle}
 							onAddTask={onAddTask}
 							onRemoveTask={onRemoveTask}
+							onEditTask={onEditTask}
+							onCheckTask={onCheckTask}
 						/>
 					}
 				</Route>

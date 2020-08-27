@@ -3,6 +3,7 @@ import Lists from "./Lists";
 import AddList from "./AddList/AddList";
 
 const Sidebar = ({lists, colors, onAddList, onRemoveList, activeList, onClickList}) => {
+
 	return (
 		<aside className="sidebar">
 			<Lists
@@ -14,8 +15,12 @@ const Sidebar = ({lists, colors, onAddList, onRemoveList, activeList, onClickLis
 
 			<AddList
 				colors={colors}
-				onAdd={onAddList}
+				onAddList={onAddList}
+				maxListsSize={10}
+				currentListsSize={lists.length}
 			/>
+
+
 		</aside>
 	);
 }

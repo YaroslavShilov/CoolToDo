@@ -20,7 +20,7 @@ export const AddTaskForm = ({list, onAddTask}) => {
 	const addTask = () => {
 		const task = {
 			'listId': list.id,
-			'text': inputValue,
+			'text': inputValue.trim(),
 			'completed': false
 		}
 		setIsLoading(true);
@@ -28,7 +28,7 @@ export const AddTaskForm = ({list, onAddTask}) => {
 		axios.post('http://localhost:3001/tasks', task).then(({data}) => {
 			onAddTask(list.id, data)
 			toggleFormVisible()
-			
+
 		})
 		.catch(() => {
 			alert('Sorry, We weren\'t able to add this task')

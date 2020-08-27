@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import axios from 'axios';
 
 import './AddList.scss'
 
@@ -9,12 +8,16 @@ import {randomId} from "../../utils";
 import AddIcon from "../Icons/AddIcon";
 import List from "../List/List";
 
-const AddList = ({colors, onAdd}) => {
+const AddList = ({colors, onAddList, maxListsSize, currentListsSize}) => {
+
+
 	
 	const [visiblePopup, setVisiblePopup] = useState(false)
 	const [selectedColor, selectColor] = useState(colors[0].id);
 	const [inputValue, setInputValue] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
+
+	if(currentListsSize > maxListsSize) return null
 	
 	const showPopup = () => setVisiblePopup(true)
 	const hidePopup = () => {
@@ -24,24 +27,13 @@ const AddList = ({colors, onAdd}) => {
 		setIsLoading(false)
 	}
 	const inputChangeHandler = e => setInputValue(e.target.value);
-	
+
 	const addList = () => {
 		setIsLoading(true)
-		axios
-			.post('http://localhost:3001/lists', {
-				name: inputValue,
-				colorId: selectedColor,
-				tasks: []
-			})
-			.then(({data}) => {
-				onAdd({
-					...data,
-					color: colors.find(color => color.id === selectedColor).hex
-				});
-			})
-			.finally( () => {
-				hidePopup()
-			})
+
+		onAddList(inputValue.trim(), selectedColor, hidePopup)
+
+
 	}
 	
 	return (

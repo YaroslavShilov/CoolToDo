@@ -1,132 +1,210 @@
 {
   "lists": [
     {
-      "id": 1,
-      "name": "Shopping",
-      "colorId": 5
+      "name": "HTML",
+      "colorId": 8,
+      "tasks": [],
+      "id": 1
     },
     {
-      "id": 2,
-      "name": "FrontEnd",
-      "colorId": 4
-    },
-    {
-      "id": 3,
-      "name": "Movies",
-      "colorId": 3
-    },
-    {
-      "id": 4,
-      "name": "Books",
-      "colorId": 2
-    },
-    {
-      "id": 5,
-      "name": "Personal",
-      "colorId": 1
-    },
-    {
-      "name": "Sport",
+      "name": "CSS",
       "colorId": 3,
-      "id": 6
-    },
-    {
-      "name": "d",
-      "colorId": 1,
       "tasks": [],
-      "id": 7
+      "id": 2
     },
     {
-      "name": "df",
-      "colorId": 1,
-      "tasks": [],
-      "id": 8
-    },
-    {
-      "name": "dafsdf",
+      "name": "JavaScript",
       "colorId": 5,
       "tasks": [],
-      "id": 9
+      "id": 3
     },
     {
-      "name": "фыва",
+      "name": "React",
+      "colorId": 6,
+      "tasks": [],
+      "id": 4
+    },
+    {
+      "name": "Shopping",
+      "colorId": 7,
+      "tasks": [],
+      "id": 5
+    },
+    {
+      "name": "Other",
       "colorId": 4,
       "tasks": [],
-      "id": 10
+      "id": 6
     }
   ],
   "tasks": [
     {
-      "id": 1,
-      "listId": 2,
-      "text": "Learn JavaScript",
-      "completed": true
-    },
-    {
-      "id": 2,
-      "listId": 2,
-      "text": "Learn Patterns",
-      "completed": false
-    },
-    {
-      "id": 3,
-      "listId": 2,
-      "text": "ReactJS Hooks (more deep)",
-      "completed": true
-    },
-    {
-      "id": 4,
-      "listId": 2,
-      "text": "Redux (redux-observable, redux-saga)",
-      "completed": false
-    },
-    {
-      "listId": 2,
-      "text": "123",
+      "listId": 1,
+      "text": "Tag div",
       "completed": true,
-      "id": 5
+      "id": 1
     },
     {
       "listId": 1,
-      "text": "test",
+      "text": "Tag a",
+      "completed": true,
+      "id": 2
+    },
+    {
+      "listId": 1,
+      "text": "Tag img",
+      "completed": false,
+      "id": 3
+    },
+    {
+      "listId": 1,
+      "text": "Head",
+      "completed": true,
+      "id": 4
+    },
+    {
+      "listId": 1,
+      "text": "Body",
+      "completed": false,
+      "id": 5
+    },
+    {
+      "listId": 2,
+      "text": ":after",
       "completed": false,
       "id": 6
     },
     {
-      "listId": 1,
-      "text": "qweqwe",
-      "completed": false,
+      "listId": 2,
+      "text": ":before",
+      "completed": true,
       "id": 7
     },
     {
-      "listId": 1,
-      "text": "qweqwe",
-      "completed": true,
+      "listId": 2,
+      "text": "color",
+      "completed": false,
       "id": 8
     },
     {
-      "listId": 4,
-      "text": "buy 1984!",
+      "listId": 2,
+      "text": "background",
+      "completed": false,
+      "id": 9
+    },
+    {
+      "listId": 2,
+      "text": "font-family",
       "completed": true,
       "id": 10
     },
     {
-      "listId": 2,
-      "text": "222",
-      "completed": true,
+      "listId": 3,
+      "text": ".trim()",
+      "completed": false,
+      "id": 11
+    },
+    {
+      "listId": 3,
+      "text": ".map()",
+      "completed": false,
       "id": 12
     },
     {
-      "listId": 6,
-      "text": "фывафыва",
+      "listId": 3,
+      "text": ".find()",
+      "completed": true,
+      "id": 13
+    },
+    {
+      "listId": 3,
+      "text": ".filter()",
+      "completed": true,
+      "id": 14
+    },
+    {
+      "listId": 4,
+      "text": "Component",
+      "completed": false,
+      "id": 15
+    },
+    {
+      "listId": 4,
+      "text": "Lifecycle",
+      "completed": true,
+      "id": 16
+    },
+    {
+      "listId": 4,
+      "text": "useState",
+      "completed": false,
+      "id": 17
+    },
+    {
+      "listId": 4,
+      "text": "useEffect",
       "completed": false,
       "id": 18
     },
     {
-      "listId": 2,
-      "text": "ddd",
-      "completed": false,
+      "listId": 4,
+      "text": "useReducer",
+      "completed": true,
       "id": 19
+    },
+    {
+      "listId": 5,
+      "text": "Hamburger",
+      "completed": false,
+      "id": 20
+    },
+    {
+      "listId": 5,
+      "text": "Milk",
+      "completed": true,
+      "id": 21
+    },
+    {
+      "listId": 5,
+      "text": "Cheese",
+      "completed": true,
+      "id": 22
+    },
+    {
+      "listId": 5,
+      "text": "Butter",
+      "completed": true,
+      "id": 23
+    },
+    {
+      "listId": 5,
+      "text": "Bread",
+      "completed": true,
+      "id": 24
+    },
+    {
+      "listId": 6,
+      "text": "Task 1",
+      "completed": true,
+      "id": 25
+    },
+    {
+      "listId": 6,
+      "text": "Task 2",
+      "completed": false,
+      "id": 26
+    },
+    {
+      "listId": 6,
+      "text": "Task 3",
+      "completed": true,
+      "id": 27
+    },
+    {
+      "listId": 6,
+      "text": "Task 4",
+      "completed": false,
+      "id": 28
     }
   ],
   "colors": [

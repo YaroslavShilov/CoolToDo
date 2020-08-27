@@ -8,7 +8,7 @@ import {AddTaskForm} from "./AddTaskForm";
 import {Task} from "./Task";
 
 
-const Tasks = ({list, onEditListTitle, onAddTask, withoutEmpty, onRemoveTask}) => {
+const Tasks = ({list, onEditListTitle, onAddTask, withoutEmpty, onRemoveTask, onEditTask, onCheckTask}) => {
 	
 	const editTitle = () => {
 		const newTitle = window.prompt('Write a new name', list.name)
@@ -43,13 +43,15 @@ const Tasks = ({list, onEditListTitle, onAddTask, withoutEmpty, onRemoveTask}) =
 							text={text}
 							completed={completed}
 							onRemoveTask={() => onRemoveTask(list.id, id)}
+							onEditTask={(value) => onEditTask(list.id, id, value)}
+							onCheckTask={() => onCheckTask(list.id, id, !completed)}
 						/>
 					)
 				}
 				
 			</ul>
 
-			<AddTaskForm list={list} onAddTask={onAddTask}/>
+			<AddTaskForm key={list.id} list={list} onAddTask={onAddTask}/>
 			
 		</div>
 	);
