@@ -1,16 +1,15 @@
 import React from 'react';
 import Badge from "../Badge/Badge";
 import RemoveIcon from "../Icons/RemoveIcon";
-import axios from 'axios';
+import axios from '../../axios/axios';
 
 import './List.scss'
 
 const List = ({items, isRemovable, onRemoveList, onClickList, activeList}) => {
-
 	const removeList = (id) => {
 		if(window.confirm('Do you really want to delete this list?')) {
 			axios
-				.delete(`http://localhost:3001/lists/${id}`)
+				.delete(`/lists/${id}`)
 				.then(() => {
 					onRemoveList(id)
 				})
@@ -29,6 +28,7 @@ const List = ({items, isRemovable, onRemoveList, onClickList, activeList}) => {
 		<ul className="list">
 			{
 				items.map(item => {
+					console.log(item)
 					return (
 						<li 
 							key={item.id} 

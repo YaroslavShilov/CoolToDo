@@ -67,13 +67,13 @@ const AddList = ({colors, onAddList, maxListsSize, currentListsSize}) => {
 					
 					<ul className="add-list__colors">
 						{colors.map(
-							item => (
+							color => (
 								<li
-									key={item.id}
-									onClick={() => selectColor(item.id)}
-									className={item.id === selectedColor ? 'active' : ''}
+									key={color.id}
+									onClick={() => selectColor(color.id)}
+									className={color.id === selectedColor ? 'active' : ''}
 								>
-									<Badge color={item.hex}/>
+									<Badge color={color.color}/>
 								</li>
 							))
 						}

@@ -210,42 +210,42 @@ export const defaultDB = {
 	"colors": [
 		{
 			"id": 1,
-			"hex": "#C9D1D3",
+			"color": "#C9D1D3",
 			"name": "grey"
 		},
 		{
 			"id": 2,
-			"hex": "#42B883",
+			"color": "#42B883",
 			"name": "green"
 		},
 		{
 			"id": 3,
-			"hex": "#64C4ED",
+			"color": "#64C4ED",
 			"name": "blue"
 		},
 		{
 			"id": 4,
-			"hex": "#FFBBCC",
+			"color": "#FFBBCC",
 			"name": "pink"
 		},
 		{
 			"id": 5,
-			"hex": "#B6E6BD",
+			"color": "#B6E6BD",
 			"name": "lime"
 		},
 		{
 			"id": 6,
-			"hex": "#C355F5",
+			"color": "#C355F5",
 			"name": "purple"
 		},
 		{
 			"id": 7,
-			"hex": "#110133",
+			"color": "#110133",
 			"name": "black"
 		},
 		{
 			"id": 8,
-			"hex": "#FF6464",
+			"color": "#FF6464",
 			"name": "red"
 		}
 	]

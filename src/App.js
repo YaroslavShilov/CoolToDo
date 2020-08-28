@@ -1,18 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import Tasks from "./components/Tasks/Tasks";
 import Sidebar from "./components/Sidebar";
-import axios from 'axios';
+import axios from './axios/axios';
 import {Route, useHistory, useLocation} from "react-router-dom";
-import {defaultDB} from "./components/defaultDB";
+import {defaultDB} from "./defaultDB";
 
 /**TODO: add gh-page **/
 /**TODO: add page 404 **/
 /**TODO: add delete button AddList if list too long **/
 /**TODO: add loader**/
 /**TODO: add default database**/
-/**TODO: add firebase**/
 
-const URL = "https://cooltodo-f7d10.firebaseio.com";
+const postDefaultDB = () => {
+	console.log('default', defaultDB)
+	localStorage.setItem('lists', JSON.stringify(defaultDB["lists"]));
+	localStorage.setItem('tasks', JSON.stringify(defaultDB["tasks"]));
+	localStorage.setItem('colors', JSON.stringify(defaultDB["colors"]));
+}
+
+
 function App() {
 	let history = useHistory();
 	let location = useLocation();
@@ -21,29 +27,22 @@ function App() {
 	const [colors, setColors] = useState(null);
 	const [activeList, setActiveList] = useState(null)
 
-
-	const onDefaultDB = () => {
-		axios.get(`${URL}/history.json`).then(({data}) => {
-			console.log(data)
-		})
-	}
-
 	useEffect(() => {
-		axios.get('http://localhost:3001/lists?_expand=color&_embed=tasks').then(({data}) => {
-			setLists(data.map(list => ({...list, color: list.color.hex})));
+		axios.get(`/lists?_expand=color&_embed=tasks`).then(({data}) => {
+			setLists(data.map((list) => {
+				list.color = list.color.color;
+				return list;
+			}))
 		})
-
-		axios.get('http://localhost:3001/colors').then(({data}) => {
+		axios.get('/colors').then(({data}) => {
 			setColors(data);
 		})
 	}, [])
 
-
-
 	//BEGIN List handlers
 	const onAddList = (title, colorId, finished) => {
 		axios
-			.post('http://localhost:3001/lists', {
+			.post('/lists', {
 				name: title,
 				colorId: colorId,
 				tasks: []
@@ -51,7 +50,7 @@ function App() {
 			.then(({data}) => {
 				const newList = {
 					...data,
-					color: colors.find(color => color.id === colorId).hex
+					color: colors.find(color => color.id === colorId).color
 				}
 				setLists([...lists, newList])
 				history.push(`/lists/${newList.id}`);
@@ -101,7 +100,7 @@ function App() {
 
 		setLists(newList);
 
-		axios.delete('http://localhost:3001/tasks/' + taskId).catch(() => {
+		axios.delete('/tasks/' + taskId).catch(() => {
 			alert('something is wrong. I cannot delete this task')
 		})
 	}
@@ -115,7 +114,7 @@ function App() {
 		})
 		setLists(newList)
 
-		axios.patch(`http://localhost:3001/tasks/${taskId}`, {
+		axios.patch(`/tasks/${taskId}`, {
 			text: value
 		}).catch(() => {
 			alert('something is wrong. I cannot change the text of task')
@@ -131,7 +130,7 @@ function App() {
 		})
 		setLists(newList);
 
-		axios.patch(`http://localhost:3001/tasks/${taskId}`, {
+		axios.patch(`/tasks/${taskId}`, {
 			completed
 		}).catch(() => {
 			alert('something is wrong. I cannot tick the task')
@@ -154,7 +153,7 @@ function App() {
 
 	return (
 		<main className={'todo'}>
-			<button onClick={onDefaultDB}>Click here for test</button>
+			<button onClick={postDefaultDB}>Click here for test</button>
 			{lists && colors
 				? <Sidebar
 					lists={lists}
