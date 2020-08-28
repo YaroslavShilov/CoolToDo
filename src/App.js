@@ -5,14 +5,15 @@ import Sidebar from "./components/Sidebar";
 import {Route, useHistory, useLocation} from "react-router-dom";
 import {defaultDB} from "./defaultDB";
 
-const postDefaultDB = async () => {
+const postDefaultDB = async (history) => {
 	await localStorage.setItem('lists', JSON.stringify(defaultDB["lists"]));
 	await localStorage.setItem('tasks', JSON.stringify(defaultDB["tasks"]));
 	await localStorage.setItem('colors', JSON.stringify(defaultDB["colors"]));
+	history.push(`/`);
 	window.location.reload(false)
 }
 
-const getDataBase = async () => {
+const getDataBase = async (history) => {
 	const dataLists = await JSON.parse(localStorage.getItem('lists')) || defaultDB["lists"]
 	const dataTasks = await JSON.parse(localStorage.getItem('tasks')) || defaultDB["tasks"]
 	const dataColors = await JSON.parse(localStorage.getItem('colors')) || defaultDB["colors"]
@@ -211,7 +212,7 @@ function App() {
 
 	return (
 		<main className={'todo'}>
-			<button className={'defaultDB'} onClick={postDefaultDB}>
+			<button className={'defaultDB'} onClick={() => postDefaultDB(history)}>
 				Default DB
 			</button>
 			{lists && colors
