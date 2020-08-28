@@ -1,21 +1,29 @@
 import React, {useEffect, useState} from 'react';
 import Tasks from "./components/Tasks/Tasks";
 import Sidebar from "./components/Sidebar";
-import axios from './axios/axios';
+//import axios from './axios/axios';
 import {Route, useHistory, useLocation} from "react-router-dom";
 import {defaultDB} from "./defaultDB";
 
-/**TODO: add gh-page **/
-/**TODO: add page 404 **/
-/**TODO: add delete button AddList if list too long **/
-/**TODO: add loader**/
-/**TODO: add default database**/
+const postDefaultDB = async () => {
+	await localStorage.setItem('lists', JSON.stringify(defaultDB["lists"]));
+	await localStorage.setItem('tasks', JSON.stringify(defaultDB["tasks"]));
+	await localStorage.setItem('colors', JSON.stringify(defaultDB["colors"]));
+	window.location.reload(false)
+}
 
-const postDefaultDB = () => {
-	console.log('default', defaultDB)
-	localStorage.setItem('lists', JSON.stringify(defaultDB["lists"]));
-	localStorage.setItem('tasks', JSON.stringify(defaultDB["tasks"]));
-	localStorage.setItem('colors', JSON.stringify(defaultDB["colors"]));
+const getDataBase = async () => {
+	const dataLists = await JSON.parse(localStorage.getItem('lists')) || defaultDB["lists"]
+	const dataTasks = await JSON.parse(localStorage.getItem('tasks')) || defaultDB["tasks"]
+	const dataColors = await JSON.parse(localStorage.getItem('colors')) || defaultDB["colors"]
+
+	const lists = dataLists.map((list) => {
+		const tasks = dataTasks.filter((task) => task.listId === list.id);
+		const color = dataColors.find((color) => color.id === list.colorId).color;
+		return {...list, tasks, color}
+	})
+
+	return {lists, colors: dataColors, tasks: dataTasks};
 }
 
 
@@ -25,39 +33,37 @@ function App() {
 
 	const [lists, setLists] = useState(null);
 	const [colors, setColors] = useState(null);
+	const [tasks, setTasks] = useState(null)
 	const [activeList, setActiveList] = useState(null)
 
 	useEffect(() => {
-		axios.get(`/lists?_expand=color&_embed=tasks`).then(({data}) => {
-			setLists(data.map((list) => {
-				list.color = list.color.color;
-				return list;
-			}))
-		})
-		axios.get('/colors').then(({data}) => {
-			setColors(data);
+		getDataBase().then(({lists, colors, tasks}) => {
+			setLists(lists);
+			setColors(colors);
+			setTasks(tasks)
 		})
 	}, [])
 
 	//BEGIN List handlers
 	const onAddList = (title, colorId, finished) => {
-		axios
-			.post('/lists', {
+		const id = lists.length + 1;
+		const newLists = [
+			...lists,
+			{
+				id,
 				name: title,
 				colorId: colorId,
-				tasks: []
-			})
-			.then(({data}) => {
-				const newList = {
-					...data,
-					color: colors.find(color => color.id === colorId).color
-				}
-				setLists([...lists, newList])
-				history.push(`/lists/${newList.id}`);
-			})
-			.finally( () => {
-				finished()
-			})
+				tasks: [],
+				color: colors.find(color => color.id === colorId).color,
+			},
+		];
+
+		(async function() {
+			await localStorage.setItem('lists', JSON.stringify(newLists));
+			setLists(newLists);
+			history.push(`/lists/${id}`);
+			finished()
+		}())
 	}
 
 	const onClickList = (list, modif ) => {
@@ -66,75 +72,127 @@ function App() {
 	}
 
 	const onRemoveList = (id) => {
-		setLists(lists.filter(item => item.id !== id))
-		history.push('/')
+		if(window.confirm('Do you really want to delete this list?')) {
+			const newLists = lists.filter(item => item.id !== id)
+
+			try {
+				localStorage.setItem('lists', JSON.stringify(newLists));
+
+				setLists(newLists)
+				history.push('/')
+			} catch {
+				alert('Something is wrong. I can\'t delete this list')
+			}
+
+		}
+
 	}
 
-	const onEditListTitle = (id, title) => {
+	const onEditListTitle = (listId, title) => {
 		const newList = lists.map(list => {
-			if (list.id === id) list.name = title;
+			if (list.id === listId) list.name = title;
 			return list
 		})
 		setLists(newList)
+
+		try {
+			localStorage.setItem('lists', JSON.stringify(lists))
+		} catch {
+			alert('something is wrong. I cannot change the name of list')
+		}
 	}
 	//END List handlers
 
 
 
 	//BEGIN Task handlers
-	const onAddTask = (listId, taskObj) => {
-		const newList = lists.map(item => {
-			if (item.id === listId) item.tasks = [...item.tasks, taskObj];
-			return item
+	const onAddTask = (listId, text, then, finished) => {
+
+		const id = tasks.length + 1;
+		const newTask = {
+			id,
+			listId,
+			text,
+			'completed': false
+		}
+
+		const newList = lists.map(list => {
+			if (list.id === listId) list.tasks = [...list.tasks, newTask];
+			return list
 		})
-		setLists(newList)
+		const newTasks = [...tasks, newTask]
+
+		setTasks(newTasks)
+		setLists(newList);
+
+		(async function() {
+			try {
+				await localStorage.setItem('tasks', JSON.stringify(newTasks))
+				then();
+			} catch {
+				alert('Sorry, We weren\'t able to add this task')
+			}
+			finished()
+		}());
 	}
 
 	const onRemoveTask = (listId, taskId) => {
-		const newList = lists.map(list => {
+		const newLists = lists.map(list => {
 			if(list.id ===  listId) {
 				list.tasks = list.tasks.filter(task => task.id !== taskId);
 			}
 			return list
 		})
 
-		setLists(newList);
+		const newTasks = tasks.filter(task => task.id !== taskId)
 
-		axios.delete('/tasks/' + taskId).catch(() => {
+		setTasks(newTasks)
+		setLists(newLists);
+
+		try {
+			localStorage.setItem('tasks', JSON.stringify(newTasks))
+		} catch {
 			alert('something is wrong. I cannot delete this task')
-		})
+		}
 	}
 
 	const onEditTask = (listId, taskId, value) => {
-		const newList = lists.map(list => {
+		const newLists = lists.map(list => {
 			if(list.id === listId) {
 				list.tasks.find(task => task.id === taskId).text = value;
 			}
 			return list
 		})
-		setLists(newList)
+		const newTasks = [...tasks, tasks.find(task => task.id === taskId).text = value]
 
-		axios.patch(`/tasks/${taskId}`, {
-			text: value
-		}).catch(() => {
+		setTasks(newTasks)
+		setLists(newLists)
+
+
+		try {
+			localStorage.setItem('tasks', JSON.stringify(newTasks));
+		} catch {
 			alert('something is wrong. I cannot change the text of task')
-		})
+		}
 	}
 
 	const onCheckTask = (listId, taskId, completed) => {
-		const newList = lists.map(list => {
+		const newLists = lists.map(list => {
 			if(list.id === listId) {
 				list.tasks.find(task => task.id === taskId).completed = completed;
 			}
 			return list
 		})
-		setLists(newList);
+		const newTasks = [...tasks, tasks.find(task => task.id === taskId).completed = completed]
 
-		axios.patch(`/tasks/${taskId}`, {
-			completed
-		}).catch(() => {
+		setTasks(newTasks);
+		setLists(newLists);
+
+		try {
+			localStorage.setItem('tasks', JSON.stringify(newTasks));
+		} catch {
 			alert('something is wrong. I cannot tick the task')
-		})
+		}
 	}
 	//END Task handlers
 
@@ -153,7 +211,9 @@ function App() {
 
 	return (
 		<main className={'todo'}>
-			<button onClick={postDefaultDB}>Click here for test</button>
+			<button className={'defaultDB'} onClick={postDefaultDB}>
+				Default DB
+			</button>
 			{lists && colors
 				? <Sidebar
 					lists={lists}

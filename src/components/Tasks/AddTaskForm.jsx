@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import axios from 'axios';
 import AddIcon from "../Icons/AddIcon";
 
 export const AddTaskForm = ({list, onAddTask}) => {
@@ -18,26 +17,10 @@ export const AddTaskForm = ({list, onAddTask}) => {
 	}
 	
 	const addTask = () => {
-		const task = {
-			'listId': list.id,
-			'text': inputValue.trim(),
-			'completed': false
-		}
 		setIsLoading(true);
-		
-		axios.post('http://localhost:3001/tasks', task).then(({data}) => {
-			onAddTask(list.id, data)
-			toggleFormVisible()
 
-		})
-		.catch(() => {
-			alert('Sorry, We weren\'t able to add this task')
-		})
-		.finally(() => {
-			setIsLoading(false);
-		})
-		
-		
+		onAddTask(list.id, inputValue.trim(), toggleFormVisible, () => setIsLoading(false));
+
 	}
 	
 	

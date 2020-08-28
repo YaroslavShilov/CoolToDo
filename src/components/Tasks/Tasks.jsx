@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 
 import './Tasks.scss';
 
@@ -9,16 +8,11 @@ import {Task} from "./Task";
 
 
 const Tasks = ({list, onEditListTitle, onAddTask, withoutEmpty, onRemoveTask, onEditTask, onCheckTask}) => {
-	
+
 	const editTitle = () => {
 		const newTitle = window.prompt('Write a new name', list.name)
 		if(newTitle) {
 			onEditListTitle(list.id, newTitle)
-			axios.patch('http://localhost:3001/lists/' + list.id, {
-				name: newTitle
-			}).catch(() => {
-				alert('something is wrong. I cannot change the name of list')
-			})
 		}
 	}
 
