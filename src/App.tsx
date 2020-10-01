@@ -84,11 +84,6 @@ const App: React.FC = () => {
   const [tasks, setTasks] = useState<TasksType>([]);
   const [activeList, setActiveList] = useState<ListType | null>(null);
 
-  console.log("lists", lists);
-  console.log("colors", colors);
-  console.log("tasks", tasks);
-  console.log("activeList", activeList);
-
   useEffect(() => {
     getDataBase().then(({ lists, colors, tasks }) => {
       setLists(lists);
@@ -124,12 +119,12 @@ const App: React.FC = () => {
     })();
   };
 
-  const onClickList = (id: number, modif: string): void => {
+  const onClickList = (id: number | string, modif?: string): void => {
     if (modif === "all") history.push("/");
     else history.push(`/lists/${id}`);
   };
 
-  const onRemoveList = async (id: number): Promise<void> => {
+  const onRemoveList = async (id: number | string): Promise<void> => {
     if (window.confirm("Do you really want to delete this list?")) {
       const newLists = lists.filter((item) => item.id !== id);
 
@@ -329,9 +324,8 @@ const App: React.FC = () => {
     }
   }, [location.pathname, lists]);
 
-  const isLists = lists.length > 0;
-  const isColors = colors.length > 0;
-  const isActiveList = activeList;
+  const isLists: boolean = lists.length > 0;
+  const isColors: boolean = colors.length > 0;
 
   return (
     <main className={"todo"}>
@@ -371,7 +365,7 @@ const App: React.FC = () => {
         </Route>
 
         <Route path={"/lists/:id"}>
-          {isLists && isActiveList && (
+          {isLists && activeList !== null && (
             <Tasks
               list={activeList}
               onEditListTitle={onEditListTitle}

@@ -3,33 +3,38 @@ import Badge from "../Badge/Badge";
 import RemoveIcon from "../Icons/RemoveIcon";
 
 import "./List.scss";
-import { ListType } from "../../types/types";
+import { ListType, TasksType } from "../../types/types";
 
-// type Props = {
-//   // items: Array<{
-//   //   id: string | number;
-//   //   icon: React.ReactNode;
-//   //   name: string;
-//   // }>;
-//   items: any;
-//   activeList: null | ListType;
-//   onClickList: (id: number | string, modif?: string) => void;
-//   isRemovable?: boolean;
-//   onRemoveList?: (id: number) => void;
-// };
+type ItemType = {
+  id: string | number;
+  icon?: React.ReactNode;
+  name: string;
+  colorId?: number;
+  tasks?: TasksType;
+  color?: string;
+  modificator?: string;
+};
 
-const List = ({
+type Props = {
+  items: ItemType[];
+  onRemoveList?: (id: number | string) => Promise<void>;
+  activeList?: ListType | null;
+  onClickList: (id: number | string, modif?: string) => void;
+  isRemovable?: boolean;
+};
+
+const List: React.FC<Props> = ({
   items,
   isRemovable,
   onRemoveList,
   onClickList,
   activeList,
 }) => {
-  const isActive = (item) => {
+  const isActive = (item: ItemType): string => {
     if (!activeList) {
-      return item.id === "all" ? "active" : null;
+      return item.id === "all" ? "active" : "";
     }
-    return activeList.id === item.id ? "active" : null;
+    return activeList.id === item.id ? "active" : "";
   };
 
   return (
@@ -39,7 +44,7 @@ const List = ({
           <li
             key={item.id}
             className={isActive(item)}
-            onClick={onClickList ? () => onClickList(item.id) : null}
+            onClick={() => onClickList(item.id)}
           >
             <Badge
               icon={item.icon}
@@ -48,7 +53,7 @@ const List = ({
             />
             <span>{item.name}</span>
             {item.tasks && <strong>{item.tasks.length}</strong>}
-            {isRemovable && (
+            {isRemovable && onRemoveList && (
               <div
                 className="list__close"
                 onClick={() => onRemoveList(item.id)}
