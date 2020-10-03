@@ -13,84 +13,24 @@ import {
   TasksType,
   TaskType,
 } from "./types/types";
-import { findColor } from "./utils";
-
-const defaultDB: DefaultDB = defaultDataBase;
-
-const localStorageSetItem = async <T extends {}>(
-  key: string,
-  obj: T
-): Promise<void> => {
-  await localStorage.setItem(key, JSON.stringify(obj));
-};
-
-const localStorageGetItem = async <T extends {}>(
-  key: string,
-  initObj: T
-): Promise<T> => {
-  return await JSON.parse(localStorage.getItem(key) || JSON.stringify(initObj));
-};
-
-const postDefaultDB = async (
-  history: History,
-  defaultDB: DefaultDB
-): Promise<void> => {
-  await localStorageSetItem<DefListsType>("lists", defaultDB.lists);
-  await localStorageSetItem<TasksType>("tasks", defaultDB.tasks);
-  await localStorageSetItem<ColorsType>("colors", defaultDB.colors);
-
-  history.push(`/`);
-
-  //TODO: It must reload the page
-  history.go(0);
-};
-
-type GetDataBaseType = () => Promise<{
-  lists: ListsType;
-  colors: ColorsType;
-  tasks: TasksType;
-}>;
-const getDataBase: GetDataBaseType = async () => {
-  const dataLists: DefListsType = await localStorageGetItem<DefListsType>(
-    "lists",
-    defaultDB.lists
-  );
-  const dataTasks = await localStorageGetItem<TasksType>(
-    "tasks",
-    defaultDB.tasks
-  );
-  const dataColors: ColorsType = await localStorageGetItem<ColorsType>(
-    "colors",
-    defaultDB.colors
-  );
-
-  const lists: ListsType = dataLists.map((list) => {
-    const tasks: TasksType = dataTasks.filter(
-      (task) => task.listId === list.id
-    );
-    const color: string = findColor(dataColors, list.colorId);
-    return { ...list, tasks, color };
-  });
-
-  return { lists, colors: dataColors, tasks: dataTasks };
-};
+import { findColor, localStorageGetItem, localStorageSetItem } from "./utils";
+import { useStoreContext } from "./store/StoreContext";
 
 const App: React.FC = () => {
   let history = useHistory<History>();
   let location = useLocation<Location>();
 
-  const [lists, setLists] = useState<ListsType>([]);
-  const [colors, setColors] = useState<ColorsType>([]);
-  const [tasks, setTasks] = useState<TasksType>([]);
+  const { state, postDB, getDB } = useStoreContext();
+
+  const [lists, setLists] = useState<ListsType>(state.lists);
+  const [colors, setColors] = useState<ColorsType>(state.colors);
+  const [tasks, setTasks] = useState<TasksType>(state.tasks);
   const [activeList, setActiveList] = useState<ListType | null>(null);
 
   useEffect(() => {
-    getDataBase().then(({ lists, colors, tasks }) => {
-      setLists(lists);
-      setColors(colors);
-      setTasks(tasks);
-    });
-  }, []);
+    console.log("App getDB");
+    getDB();
+  }, [getDB]);
 
   //BEGIN List handlers
 
@@ -327,12 +267,13 @@ const App: React.FC = () => {
   const isLists: boolean = lists.length > 0;
   const isColors: boolean = colors.length > 0;
 
+  console.log("state", state);
+  console.log("isLists", isLists);
+  console.log("isColors", isColors);
+
   return (
     <main className={"todo"}>
-      <button
-        className={"defaultDB"}
-        onClick={() => postDefaultDB(history, defaultDB)}
-      >
+      <button className={"defaultDB"} onClick={postDB}>
         Default DB
       </button>
       {isLists && isColors ? (
