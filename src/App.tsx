@@ -20,7 +20,7 @@ const App: React.FC = () => {
   let history = useHistory<History>();
   let location = useLocation<Location>();
 
-  const { state, postDB, getDB } = useStoreContext();
+  const { state, postDefaultDB } = useStoreContext();
 
   const [lists, setLists] = useState<ListsType>(state.lists);
   const [colors, setColors] = useState<ColorsType>(state.colors);
@@ -28,9 +28,10 @@ const App: React.FC = () => {
   const [activeList, setActiveList] = useState<ListType | null>(null);
 
   useEffect(() => {
-    console.log("App getDB");
-    getDB();
-  }, [getDB]);
+    setLists(state.lists);
+    setColors(state.colors);
+    setTasks(state.tasks);
+  }, [state]);
 
   //BEGIN List handlers
 
@@ -254,26 +255,28 @@ const App: React.FC = () => {
   //END Task handlers
 
   useEffect(() => {
-    if (location.pathname === "/") {
-      return setActiveList(null);
-    }
-    const listId: number = Number(location.pathname.split("/lists/")[1]);
-    if (lists) {
-      const list = lists.find((list) => list.id === listId) || null;
-      setActiveList(list);
-    }
+    // if (location.pathname === "/") {
+    //   return setActiveList(null);
+    // }
+    // const listId: number = Number(location.pathname.split("/lists/")[1]);
+    // if (lists) {
+    //   const list = lists.find((list) => list.id === listId) || null;
+    //   setActiveList(list);
+    // }
   }, [location.pathname, lists]);
 
   const isLists: boolean = lists.length > 0;
   const isColors: boolean = colors.length > 0;
 
   console.log("state", state);
-  console.log("isLists", isLists);
-  console.log("isColors", isColors);
+  console.log("Lists", lists);
+  console.log("isLists", lists.length);
+  console.log("Colors", colors);
+  console.log("isColors", colors.length);
 
   return (
     <main className={"todo"}>
-      <button className={"defaultDB"} onClick={postDB}>
+      <button className={"defaultDB"} onClick={postDefaultDB}>
         Default DB
       </button>
       {isLists && isColors ? (

@@ -3,8 +3,7 @@ import { InitialState } from "./reducer";
 
 export type StoreContextType = {
   state: InitialState;
-  postDB: () => Promise<void>;
-  getDB: () => Promise<void>;
+  postDefaultDB: () => Promise<void>;
 };
 
 export const StoreContext = React.createContext<StoreContextType | undefined>(
