@@ -1,5 +1,5 @@
 export type DefaultDB = {
-  lists: DefListsType;
+  lists: DefListsType | ListsType;
   tasks: TasksType;
   colors: ColorsType;
 };
@@ -29,7 +29,3 @@ export type ColorType = {
   color: string;
   name: string;
 };
-
-export type InferValueTypes<T> = T extends { [key: string]: infer U }
-  ? U
-  : never;

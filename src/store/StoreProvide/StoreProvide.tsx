@@ -17,11 +17,10 @@ import {
   InitialState,
   reducer,
 } from "../reducer";
-import { applyMiddleware, createStore } from "redux";
-import thunk from "redux-thunk";
 import {
   findColor,
   localStorageGetItem,
+  localStoragePostDefault,
   localStorageSetItem,
 } from "../../utils";
 
@@ -30,8 +29,6 @@ const defaultDB: DefaultDB = defaultDataBase;
 type Props = {
   children: React.ReactNode;
 };
-
-const state = createStore(reducer, applyMiddleware(thunk));
 
 export const StoreProvide: React.FC<Props> = ({ children }) => {
   let history = useHistory<History>();
@@ -70,13 +67,26 @@ export const StoreProvide: React.FC<Props> = ({ children }) => {
   const postDefaultDB = async (): Promise<void> => {
     //post DefaultDB from defaultDB.js to LocalStorage
     //this method is for to come back default state
-    await localStorageSetItem("lists", defaultDB["lists"]);
-    await localStorageSetItem("tasks", defaultDB["tasks"]);
-    await localStorageSetItem("colors", defaultDB["colors"]);
+    await localStoragePostDefault("lists");
+    await localStoragePostDefault("tasks");
+    await localStoragePostDefault("colors");
     await getDB();
     if (location.pathname !== "/") history.push(`/`);
   };
   //END postDefaultDB
+
+  //BEGIN onAddList
+  const onAddList = async (
+    title: string,
+    colorId: number,
+    callback: () => void
+  ): Promise<void> => {
+    const listId = state.lists.length + 1;
+    dispatch(actions.addList(title, colorId, listId));
+    history.push(`/lists/${listId}`);
+    callback();
+  };
+  //END onAddList
 
   useEffect(() => {
     getDB();
@@ -87,6 +97,7 @@ export const StoreProvide: React.FC<Props> = ({ children }) => {
       value={{
         state,
         postDefaultDB,
+        onAddList,
       }}
     >
       {children}

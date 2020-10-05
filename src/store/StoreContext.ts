@@ -4,6 +4,11 @@ import { InitialState } from "./reducer";
 export type StoreContextType = {
   state: InitialState;
   postDefaultDB: () => Promise<void>;
+  onAddList: (
+    title: string,
+    colorId: number,
+    callback: () => void
+  ) => Promise<void>;
 };
 
 export const StoreContext = React.createContext<StoreContextType | undefined>(

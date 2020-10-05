@@ -20,7 +20,7 @@ const App: React.FC = () => {
   let history = useHistory<History>();
   let location = useLocation<Location>();
 
-  const { state, postDefaultDB } = useStoreContext();
+  const { state, postDefaultDB, onAddList } = useStoreContext();
 
   const [lists, setLists] = useState<ListsType>(state.lists);
   const [colors, setColors] = useState<ColorsType>(state.colors);
@@ -34,31 +34,6 @@ const App: React.FC = () => {
   }, [state]);
 
   //BEGIN List handlers
-
-  const onAddList = (
-    title: string,
-    colorId: number,
-    callback: () => void
-  ): void => {
-    const id = lists.length + 1;
-    const newLists: ListsType = [
-      ...lists,
-      {
-        id,
-        name: title,
-        colorId: colorId,
-        tasks: [],
-        color: findColor(colors, colorId),
-      },
-    ];
-
-    (async function () {
-      await localStorageSetItem("lists", newLists);
-      setLists(newLists);
-      history.push(`/lists/${id}`);
-      callback();
-    })();
-  };
 
   const onClickList = (id: number | string, modif?: string): void => {
     if (modif === "all") history.push("/");
@@ -267,12 +242,6 @@ const App: React.FC = () => {
 
   const isLists: boolean = lists.length > 0;
   const isColors: boolean = colors.length > 0;
-
-  console.log("state", state);
-  console.log("Lists", lists);
-  console.log("isLists", lists.length);
-  console.log("Colors", colors);
-  console.log("isColors", colors.length);
 
   return (
     <main className={"todo"}>

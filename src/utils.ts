@@ -19,9 +19,15 @@ export const localStorageGetItem = async <T, K extends keyof DefaultDB>(
   );
 };
 
-export const localStorageSetItem = async <T, K extends keyof DefaultDB>(
+export const localStorageSetItem = async <K extends keyof DefaultDB>(
   key: K,
-  obj: T
+  obj: DefaultDB[K]
 ): Promise<void> => {
   await localStorage.setItem(key, JSON.stringify(obj));
+};
+
+export const localStoragePostDefault = async <K extends keyof DefaultDB>(
+  key: K
+): Promise<void> => {
+  await localStorage.setItem(key, JSON.stringify(defaultDB[key]));
 };
