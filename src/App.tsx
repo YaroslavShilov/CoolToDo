@@ -20,7 +20,7 @@ const App: React.FC = () => {
   let history = useHistory<History>();
   let location = useLocation<Location>();
 
-  const { state, postDefaultDB, onAddList } = useStoreContext();
+  const { state, postDefaultDB, onAddList, onAddTask } = useStoreContext();
 
   const [lists, setLists] = useState<ListsType>(state.lists);
   const [colors, setColors] = useState<ColorsType>(state.colors);
@@ -74,40 +74,6 @@ const App: React.FC = () => {
   //END List handlers
 
   //BEGIN Task handlers
-  const onAddTask = (
-    listId: number,
-    text: string,
-    then: () => void,
-    callback: () => void
-  ): void => {
-    const id = tasks.length + 1;
-
-    const newTask: TaskType = {
-      id,
-      listId,
-      text,
-      completed: false,
-    };
-
-    const newList: ListsType = lists.map((list) => {
-      if (list.id === listId) list.tasks = [...list.tasks, newTask];
-      return list;
-    });
-    const newTasks: TasksType = [...tasks, newTask];
-
-    setTasks(newTasks);
-    setLists(newList);
-
-    (async function () {
-      try {
-        await localStorageSetItem("tasks", newTasks);
-        then();
-      } catch {
-        alert("Sorry, We weren't able to add this task");
-      }
-      callback();
-    })();
-  };
 
   const onRemoveTask = async (
     listId: number,

@@ -76,17 +76,28 @@ export const StoreProvide: React.FC<Props> = ({ children }) => {
   //END postDefaultDB
 
   //BEGIN onAddList
-  const onAddList = async (
+  const onAddList = (
     title: string,
     colorId: number,
     callback: () => void
-  ): Promise<void> => {
+  ): void => {
     const listId = state.lists.length + 1;
     dispatch(actions.addList(title, colorId, listId));
     history.push(`/lists/${listId}`);
     callback();
   };
   //END onAddList
+
+  //BEGIN onAddTask
+  const onAddTask = (
+    listId: number,
+    text: string,
+    then: () => void,
+    callback: () => void
+  ): void => {
+    dispatch(actions.addTask(listId, text, then, callback));
+  };
+  //END onAddTask
 
   useEffect(() => {
     getDB();
@@ -98,6 +109,7 @@ export const StoreProvide: React.FC<Props> = ({ children }) => {
         state,
         postDefaultDB,
         onAddList,
+        onAddTask,
       }}
     >
       {children}

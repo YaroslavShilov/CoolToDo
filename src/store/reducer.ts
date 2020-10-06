@@ -1,9 +1,11 @@
-import { ColorsType, ListsType, TasksType } from "../types/types";
+import { ColorsType, ListsType, TasksType, TaskType } from "../types/types";
 import { findColor, localStorageSetItem } from "../utils";
+import { server } from "../api/api";
 
 enum ActionType {
   SET_STATE = "SET_STATE",
   ADD_LIST = "ADD_LIST",
+  ADD_TASK = "ADD_TASK",
 }
 
 export type InitialState = {
@@ -26,7 +28,7 @@ export const reducer = (
     case ActionType.SET_STATE:
       return action.payload;
 
-    case ActionType.ADD_LIST:
+    case ActionType.ADD_LIST: {
       const { title: name, listId: id, colorId } = action;
       const list = {
         id,
@@ -35,10 +37,33 @@ export const reducer = (
         tasks: [],
         color: findColor(state.colors, colorId),
       };
-      const lists = [...state.lists, list];
-      localStorageSetItem("lists", lists);
+      const newLists = [...state.lists, list];
+      server.addLists(newLists);
+      return { ...state, lists: newLists };
+    }
 
-      return { ...state, lists };
+    case ActionType.ADD_TASK: {
+      const { listId, text, then, callback } = action;
+      const id = state.tasks.length + 1;
+
+      const newTask: TaskType = {
+        id,
+        listId,
+        text,
+        completed: false,
+      };
+
+      const newLists: ListsType = state.lists.map((list) => {
+        const newList = { ...list };
+        if (list.id === listId) newList.tasks = [...list.tasks, newTask];
+        return newList;
+      });
+      const newTasks: TasksType = [...state.tasks, newTask];
+
+      server.addTasks(newTasks, then, callback);
+
+      return { ...state, lists: newLists, tasks: newTasks };
+    }
 
     default:
       return state;
@@ -61,5 +86,18 @@ export const actions = {
       title,
       colorId,
       listId,
+    } as const),
+  addTask: (
+    listId: number,
+    text: string,
+    then: () => void,
+    callback: () => void
+  ) =>
+    ({
+      type: ActionType.ADD_TASK,
+      listId,
+      text,
+      then,
+      callback,
     } as const),
 };
