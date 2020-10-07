@@ -17,7 +17,7 @@ type ItemType = {
 
 type Props = {
   items: ItemType[];
-  onRemoveList?: (id: number | string) => Promise<void>;
+  onRemoveList?: (id: number | string) => void;
   activeList?: ListType | null;
   onClickList: (id: number | string, modif?: string) => void;
   isRemovable?: boolean;

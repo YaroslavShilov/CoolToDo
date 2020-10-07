@@ -4,12 +4,10 @@ import { useHistory, useLocation } from "react-router-dom";
 import { History, Location } from "history";
 import {
   ColorsType,
-  DefaultDB,
   DefListsType,
   ListsType,
   TasksType,
 } from "../../types/types";
-import { defaultDataBase } from "../../defaultDB";
 import {
   actions,
   ActionsType,
@@ -21,10 +19,7 @@ import {
   findColor,
   localStorageGetItem,
   localStoragePostDefault,
-  localStorageSetItem,
 } from "../../utils";
-
-const defaultDB: DefaultDB = defaultDataBase;
 
 type Props = {
   children: React.ReactNode;
@@ -75,8 +70,8 @@ export const StoreProvide: React.FC<Props> = ({ children }) => {
   };
   //END postDefaultDB
 
-  //BEGIN onAddList
-  const onAddList = (
+  //BEGIN addList
+  const addList = (
     title: string,
     colorId: number,
     callback: () => void
@@ -86,10 +81,25 @@ export const StoreProvide: React.FC<Props> = ({ children }) => {
     history.push(`/lists/${listId}`);
     callback();
   };
-  //END onAddList
+  //END addList
 
-  //BEGIN onAddTask
-  const onAddTask = (
+  //BEGIN removeList
+  const removeList = (id: number | string): void => {
+    if (window.confirm("Do you really want to delete this list?")) {
+      dispatch(actions.removeList(id));
+      history.push("/");
+    }
+  };
+  //END removeList
+
+  //BEGIN changeListTitle
+  const changeListTitle = (listId: number, title: string): void => {
+    dispatch(actions.changeListTitle(listId, title));
+  };
+  //END changeListTitle
+
+  //BEGIN addTask
+  const addTask = (
     listId: number,
     text: string,
     then: () => void,
@@ -97,7 +107,23 @@ export const StoreProvide: React.FC<Props> = ({ children }) => {
   ): void => {
     dispatch(actions.addTask(listId, text, then, callback));
   };
-  //END onAddTask
+  //END addTask
+
+  //BEGIN removeTask
+  const removeTask = (listId: number, taskId: number): void => {
+    dispatch(actions.removeTask(listId, taskId));
+  };
+  //END removeTask
+
+  //BEGIN changeTaskTitle
+  const changeTaskTitle = (
+    listId: number,
+    taskId: number,
+    value: string | number
+  ): void => {
+    dispatch(actions.changeTaskTitle(listId, taskId, value));
+  };
+  //END changeTaskTitle
 
   useEffect(() => {
     getDB();
@@ -108,8 +134,12 @@ export const StoreProvide: React.FC<Props> = ({ children }) => {
       value={{
         state,
         postDefaultDB,
-        onAddList,
-        onAddTask,
+        addList,
+        addTask,
+        removeTask,
+        removeList,
+        changeListTitle,
+        changeTaskTitle,
       }}
     >
       {children}

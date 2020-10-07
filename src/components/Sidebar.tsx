@@ -7,7 +7,7 @@ type Props = {
   lists: ListsType;
   colors: ColorsType;
   onAddList: (title: string, colorId: number, callback: () => void) => void;
-  onRemoveList: (id: number | string) => Promise<void>;
+  onRemoveList: (id: number | string) => void;
   activeList: ListType | null;
   onClickList: (id: number | string, modif?: string) => void;
 };

@@ -9,7 +9,7 @@ import { ListType } from "../../types/types";
 
 type Props = {
   list: ListType;
-  onEditListTitle: (listId: number, title: string) => Promise<void>;
+  onChangeListTitle: (listId: number, title: string) => void;
   onAddTask: (
     listId: number,
     text: string,
@@ -17,12 +17,8 @@ type Props = {
     callback: () => void
   ) => void;
   withoutEmpty?: boolean;
-  onRemoveTask: (listId: number, taskId: number) => Promise<void>;
-  onEditTask: (
-    listId: number,
-    taskId: number,
-    value: string | number
-  ) => Promise<void>;
+  onRemoveTask: (listId: number, taskId: number) => void;
+  onEditTask: (listId: number, taskId: number, value: string | number) => void;
   onCheckTask: (
     listId: number,
     taskId: number,
@@ -32,7 +28,7 @@ type Props = {
 
 const Tasks: React.FC<Props> = ({
   list,
-  onEditListTitle,
+  onChangeListTitle,
   onAddTask,
   withoutEmpty,
   onRemoveTask,
@@ -44,7 +40,7 @@ const Tasks: React.FC<Props> = ({
       "Write a new name",
       list.name
     );
-    if (newTitle) onEditListTitle(list.id, newTitle).then();
+    if (newTitle) onChangeListTitle(list.id, newTitle);
   };
 
   return (

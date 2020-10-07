@@ -4,12 +4,22 @@ import { InitialState } from "./reducer";
 export type StoreContextType = {
   state: InitialState;
   postDefaultDB: () => Promise<void>;
-  onAddList: (title: string, colorId: number, callback: () => void) => void;
-  onAddTask: (
+
+  addList: (title: string, colorId: number, callback: () => void) => void;
+  removeList: (id: number | string) => void;
+  changeListTitle: (listId: number, title: string) => void;
+
+  addTask: (
     listId: number,
     text: string,
     then: () => void,
     callback: () => void
+  ) => void;
+  removeTask: (listId: number, taskId: number) => void;
+  changeTaskTitle: (
+    listId: number,
+    taskId: number,
+    value: string | number
   ) => void;
 };
 

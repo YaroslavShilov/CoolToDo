@@ -5,7 +5,7 @@ import { ListsType, ListType } from "../types/types";
 
 type Props = {
   lists: ListsType;
-  onRemoveList: (id: number | string) => Promise<void>;
+  onRemoveList: (id: number | string) => void;
   activeList: ListType | null;
   onClickList: (id: number | string, modif?: string) => void;
 };
