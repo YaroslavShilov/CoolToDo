@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "659230a60e0a8ade008b6746b19da6fe",
+    "revision": "3fd90b2adbeb4551831c9fc9707bba05",
     "url": "/CoolToDo/index.html"
   },
   {
-    "revision": "7af0297af7e208c3d128",
+    "revision": "c2dc5202b2be2971d845",
     "url": "/CoolToDo/static/css/main.f584227e.chunk.css"
   },
   {
-    "revision": "ae67e6fa3aad9f2d2cac",
-    "url": "/CoolToDo/static/js/2.add2015a.chunk.js"
+    "revision": "cb1015fb2f64acf96695",
+    "url": "/CoolToDo/static/js/2.7c092a6f.chunk.js"
   },
   {
     "revision": "c64c486544348f10a6d6c716950bc223",
-    "url": "/CoolToDo/static/js/2.add2015a.chunk.js.LICENSE.txt"
+    "url": "/CoolToDo/static/js/2.7c092a6f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "7af0297af7e208c3d128",
-    "url": "/CoolToDo/static/js/main.dcc5a228.chunk.js"
+    "revision": "c2dc5202b2be2971d845",
+    "url": "/CoolToDo/static/js/main.6fe9228a.chunk.js"
   },
   {
     "revision": "797168c667fb91ca6455",
