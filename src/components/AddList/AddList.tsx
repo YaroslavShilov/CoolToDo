@@ -7,27 +7,21 @@ import CloseIcon from "../Icons/CloseIcon";
 import { randomId } from "../../utils";
 import AddIcon from "../Icons/AddIcon";
 import List from "../List/List";
-import { ColorsType } from "../../types/types";
+import { useStoreContext } from "../../store/StoreContext";
 
 type Props = {
-  colors: ColorsType;
-  onAddList: (title: string, colorId: number, callback: () => void) => void;
   maxListsSize: number;
-  currentListsSize: number;
 };
 
-const AddList: React.FC<Props> = ({
-  colors,
-  onAddList,
-  maxListsSize,
-  currentListsSize,
-}) => {
+const AddList: React.FC<Props> = ({ maxListsSize }) => {
+  const { colors, addList, lists } = useStoreContext();
+
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [selectedColor, selectColor] = useState(colors[0].id);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  if (currentListsSize > maxListsSize) return null;
+  if (lists.length > maxListsSize) return null;
 
   const showPopup = (): void => setVisiblePopup(true);
   const hidePopup = (): void => {
@@ -39,10 +33,9 @@ const AddList: React.FC<Props> = ({
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void =>
     setInputValue(e.target.value);
 
-  const addList = () => {
+  const onAddList = () => {
     setIsLoading(true);
-
-    onAddList(inputValue.trim(), selectedColor, hidePopup);
+    addList(inputValue.trim(), selectedColor, hidePopup);
   };
 
   return (
@@ -86,7 +79,7 @@ const AddList: React.FC<Props> = ({
           </ul>
           <button
             className={"button"}
-            onClick={addList}
+            onClick={onAddList}
             disabled={!inputValue || isLoading}
           >
             {isLoading ? "Loading..." : "Add"}
