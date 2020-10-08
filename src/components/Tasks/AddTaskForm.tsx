@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import AddIcon from "../Icons/AddIcon";
 import { ListType } from "../../types/types";
+import { useStoreContext } from "../../store/StoreContext";
 
 type Props = {
   list: ListType;
-  onAddTask: (
-    listId: number,
-    text: string,
-    then: () => void,
-    callback: () => void
-  ) => void;
 };
 
-export const AddTaskForm: React.FC<Props> = ({ list, onAddTask }) => {
+export const AddTaskForm: React.FC<Props> = ({ list }) => {
+  const { addTask } = useStoreContext();
+
   const [visibleForm, setVisibleForm] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -26,10 +23,10 @@ export const AddTaskForm: React.FC<Props> = ({ list, onAddTask }) => {
     setInputValue(e.target.value);
   };
 
-  const addTask = (): void => {
+  const onAddTask = (): void => {
     setIsLoading(true);
 
-    onAddTask(list.id, inputValue.trim(), toggleFormVisible, () =>
+    addTask(list.id, inputValue.trim(), toggleFormVisible, () =>
       setIsLoading(false)
     );
   };
@@ -52,7 +49,7 @@ export const AddTaskForm: React.FC<Props> = ({ list, onAddTask }) => {
           />
           <button
             className={"button"}
-            onClick={addTask}
+            onClick={onAddTask}
             disabled={!inputValue || isLoading}
           >
             {isLoading ? "Loading..." : "Add"}

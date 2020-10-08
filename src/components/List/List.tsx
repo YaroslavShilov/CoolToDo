@@ -4,6 +4,8 @@ import RemoveIcon from "../Icons/RemoveIcon";
 
 import "./List.scss";
 import { ListType, TasksType } from "../../types/types";
+import { useHistory, useLocation } from "react-router-dom";
+import { History } from "history";
 
 type ItemType = {
   id: string | number;
@@ -17,24 +19,43 @@ type ItemType = {
 
 type Props = {
   items: ItemType[];
-  onRemoveList?: (id: number | string) => void;
+  removeList?: (id: number | string) => void;
   activeList?: ListType | null;
-  onClickList: (id: number | string, modif?: string) => void;
   isRemovable?: boolean;
+  onClickList?: () => void;
 };
 
 const List: React.FC<Props> = ({
   items,
   isRemovable,
-  onRemoveList,
-  onClickList,
+  removeList,
   activeList,
+  onClickList,
 }) => {
+  const history = useHistory<History>();
+  const location = useLocation<Location>();
+
   const isActive = (item: ItemType): string => {
     if (!activeList) {
       return item.id === "all" ? "active" : "";
     }
     return activeList.id === item.id ? "active" : "";
+  };
+
+  const defOnClickList = (id: number | string) => {
+    if (onClickList) onClickList();
+    else {
+      const { pathname } = location;
+      const activeListId: string = pathname.split("/lists/")[1];
+
+      const isActiveList = activeListId === id.toString();
+      const isMainPage = pathname === "/" && id.toString() === "all";
+
+      if (!isActiveList && !isMainPage) {
+        if (id === "all") history.push("/");
+        else history.push(`/lists/${id}`);
+      }
+    }
   };
 
   return (
@@ -44,7 +65,7 @@ const List: React.FC<Props> = ({
           <li
             key={item.id}
             className={isActive(item)}
-            onClick={() => onClickList(item.id)}
+            onClick={() => defOnClickList(item.id)}
           >
             <Badge
               icon={item.icon}
@@ -53,10 +74,13 @@ const List: React.FC<Props> = ({
             />
             <span>{item.name}</span>
             {item.tasks && <strong>{item.tasks.length}</strong>}
-            {isRemovable && onRemoveList && (
+            {isRemovable && removeList && (
               <div
                 className="list__close"
-                onClick={() => onRemoveList(item.id)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeList(item.id);
+                }}
               >
                 <RemoveIcon />
               </div>

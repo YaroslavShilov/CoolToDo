@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { InitialState } from "./reducer";
 
-export type StoreContextType = {
-  state: InitialState;
+export type StoreContextType = InitialState & {
+  getDB: () => Promise<void>;
   postDefaultDB: () => Promise<void>;
 
   addList: (title: string, colorId: number, callback: () => void) => void;
@@ -21,6 +21,9 @@ export type StoreContextType = {
     taskId: number,
     value: string | number
   ) => void;
+  checkTask: (listId: number, taskId: number, completed: boolean) => void;
+
+  setActiveList: (url: string) => void;
 };
 
 export const StoreContext = React.createContext<StoreContextType | undefined>(

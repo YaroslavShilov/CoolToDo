@@ -8,18 +8,18 @@ type Props = {
   id: number;
   text: string;
   completed: boolean;
-  onRemoveTask: () => void;
-  onEditTask: (value: string) => void;
-  onCheckTask: () => void;
+  removeTask: () => void;
+  changeTaskTitle: (value: string) => void;
+  checkTask: () => void;
 };
 
 export const Task: React.FC<Props> = ({
   id,
   text,
   completed,
-  onRemoveTask,
-  onEditTask,
-  onCheckTask,
+  removeTask,
+  changeTaskTitle,
+  checkTask,
 }) => {
   const [isRemove, setIsRemove] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -34,11 +34,11 @@ export const Task: React.FC<Props> = ({
   const agreeHandler = () => {
     if (isEdit) {
       if (value.trim() !== text) {
-        onEditTask(value.trim());
+        changeTaskTitle(value.trim());
       }
       setIsEdit(false);
     }
-    if (isRemove) onRemoveTask();
+    if (isRemove) removeTask();
   };
   const refuseHandler = () => {
     setIsEdit(false);
@@ -58,7 +58,7 @@ export const Task: React.FC<Props> = ({
           type="checkbox"
           id={`task-${id}`}
           checked={completed}
-          onChange={onCheckTask}
+          onChange={checkTask}
         />
         <label htmlFor={`task-${id}`}>
           <CheckIcon />

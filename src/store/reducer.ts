@@ -1,27 +1,37 @@
-import { ColorsType, ListsType, TasksType, TaskType } from "../types/types";
+import {
+  ColorsType,
+  ListsType,
+  ListType,
+  TasksType,
+  TaskType,
+} from "../types/types";
 import { changeTask, findColor } from "../utils";
 import { server } from "../api/api";
 
 enum ActionType {
   SET_STATE = "SET_STATE",
+  SET_ACTIVE_LIST = "SET_ACTIVE_LIST",
   ADD_LIST = "ADD_LIST",
   REMOVE_LIST = "REMOVE_LIST",
   CHANGE_LIST_TITLE = "CHANGE_LIST_TITLE",
   ADD_TASK = "ADD_TASK",
   REMOVE_TASK = "REMOVE_TASK",
   CHANGE_TASK_TITLE = "CHANGE_TASK_TITLE",
+  CHECK_TASK = "CHECK_TASK",
 }
 
 export type InitialState = {
   lists: ListsType;
   tasks: TasksType;
   colors: ColorsType;
+  activeList: ListType | null;
 };
 
 export const initialState: InitialState = {
   lists: [],
   tasks: [],
   colors: [],
+  activeList: null,
 };
 
 export const reducer = (
@@ -140,7 +150,45 @@ export const reducer = (
       );
       return { ...state, lists: newLists, tasks: newTasks };
     }
+
+    case ActionType.CHECK_TASK: {
+      const { listId, taskId, completed } = action;
+      const newLists: ListsType = changeTask.ofLists(
+        state.lists,
+        listId,
+        taskId,
+        "completed",
+        completed
+      );
+      const newTasks: TasksType = changeTask.ofTasks(
+        state.tasks,
+        taskId,
+        "completed",
+        completed
+      );
+
+      server.tasks.setTasks(
+        newTasks,
+        "Something is wrong. I can't tick the task"
+      );
+
+      return { ...state, lists: newLists, tasks: newTasks };
+    }
     //END TASK
+
+    case ActionType.SET_ACTIVE_LIST: {
+      const { url } = action;
+      let newState;
+
+      if (url === "/") newState = { ...state, activeList: null };
+      else {
+        const listId: number = Number(url.split("/lists/")[1]);
+        const activeList =
+          state.lists.find((list) => list.id === listId) || null;
+        newState = { ...state, activeList };
+      }
+      return newState;
+    }
 
     default:
       return state;
@@ -203,5 +251,18 @@ export const actions = {
       taskId,
       value,
     } as const),
+  checkTask: (listId: number, taskId: number, completed: boolean) =>
+    ({
+      type: ActionType.CHECK_TASK,
+      listId,
+      taskId,
+      completed,
+    } as const),
   //END TASK
+
+  setActiveList: (url: string) =>
+    ({
+      type: ActionType.SET_ACTIVE_LIST,
+      url,
+    } as const),
 };
