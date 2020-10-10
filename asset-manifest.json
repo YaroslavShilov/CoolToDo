@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/CoolToDo/static/css/main.f584227e.chunk.css",
-    "main.js": "/CoolToDo/static/js/main.6fe9228a.chunk.js",
-    "main.js.map": "/CoolToDo/static/js/main.6fe9228a.chunk.js.map",
+    "main.css": "/CoolToDo/static/css/main.802a4e50.chunk.css",
+    "main.js": "/CoolToDo/static/js/main.a8d512e2.chunk.js",
+    "main.js.map": "/CoolToDo/static/js/main.a8d512e2.chunk.js.map",
     "runtime-main.js": "/CoolToDo/static/js/runtime-main.cef1cb9f.js",
     "runtime-main.js.map": "/CoolToDo/static/js/runtime-main.cef1cb9f.js.map",
     "static/js/2.7c092a6f.chunk.js": "/CoolToDo/static/js/2.7c092a6f.chunk.js",
     "static/js/2.7c092a6f.chunk.js.map": "/CoolToDo/static/js/2.7c092a6f.chunk.js.map",
     "index.html": "/CoolToDo/index.html",
-    "precache-manifest.914b42a63f2104a3a143c1035b4db7b2.js": "/CoolToDo/precache-manifest.914b42a63f2104a3a143c1035b4db7b2.js",
+    "precache-manifest.b7e445f8bf8ae491c73e2b16e4e8ce30.js": "/CoolToDo/precache-manifest.b7e445f8bf8ae491c73e2b16e4e8ce30.js",
     "service-worker.js": "/CoolToDo/service-worker.js",
-    "static/css/main.f584227e.chunk.css.map": "/CoolToDo/static/css/main.f584227e.chunk.css.map",
+    "static/css/main.802a4e50.chunk.css.map": "/CoolToDo/static/css/main.802a4e50.chunk.css.map",
     "static/js/2.7c092a6f.chunk.js.LICENSE.txt": "/CoolToDo/static/js/2.7c092a6f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.cef1cb9f.js",
     "static/js/2.7c092a6f.chunk.js",
-    "static/css/main.f584227e.chunk.css",
-    "static/js/main.6fe9228a.chunk.js"
+    "static/css/main.802a4e50.chunk.css",
+    "static/js/main.a8d512e2.chunk.js"
   ]
 }
