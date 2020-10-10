@@ -34,7 +34,7 @@ export const initialState: InitialState = {
   activeList: null,
 };
 
-export const reducer = (
+export const StoreReducer = (
   state: InitialState = initialState,
   action: ActionsType
 ): InitialState => {

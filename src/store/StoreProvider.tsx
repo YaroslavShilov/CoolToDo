@@ -1,5 +1,5 @@
 import React, { useCallback, useReducer } from "react";
-import { StoreContext } from "../StoreContext";
+import { StoreContext } from "./StoreContext";
 import { useHistory, useLocation } from "react-router-dom";
 import { History, Location } from "history";
 import {
@@ -7,30 +7,30 @@ import {
   DefListsType,
   ListsType,
   TasksType,
-} from "../../types/types";
+} from "../types/types";
 import {
   actions,
   ActionsType,
   initialState,
   InitialState,
-  reducer,
-} from "../reducer";
+  StoreReducer,
+} from "./StoreReducer";
 import {
   findColor,
   localStorageGetItem,
   localStoragePostDefault,
-} from "../../utils";
+} from "../utils";
 
 type Props = {
   children: React.ReactNode;
 };
 
-export const StoreProvide: React.FC<Props> = ({ children }) => {
+export const StoreProvider: React.FC<Props> = ({ children }) => {
   let history = useHistory<History>();
   let location = useLocation<Location>();
 
   type Reducer = React.Reducer<InitialState, ActionsType>;
-  const [state, dispatch] = useReducer<Reducer>(reducer, initialState);
+  const [state, dispatch] = useReducer<Reducer>(StoreReducer, initialState);
 
   //BEGIN setActiveList
   const setActiveList = useCallback((url: string): void => {

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { InitialState } from "./reducer";
+import { InitialState } from "./StoreReducer";
 
 export type StoreContextType = InitialState & {
   getDB: () => Promise<void>;

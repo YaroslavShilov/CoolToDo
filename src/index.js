@@ -3,13 +3,13 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "./index.scss";
 import { HashRouter } from "react-router-dom";
-import { StoreProvide } from "./store/StoreProvide/StoreProvide";
+import { StoreProvider } from "./store/StoreProvider";
 
 ReactDOM.render(
   <HashRouter>
-    <StoreProvide>
+    <StoreProvider>
       <App />
-    </StoreProvide>
+    </StoreProvider>
   </HashRouter>,
   document.getElementById("root")
 );
