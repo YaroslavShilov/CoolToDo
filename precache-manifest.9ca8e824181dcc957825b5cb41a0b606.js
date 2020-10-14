@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ef7b1c7f1ec88487b282a5476d3c471e",
+    "revision": "bd05823405e93984bfae04a7f981199e",
     "url": "/CoolToDo/index.html"
   },
   {
-    "revision": "55b92c3f86b818ee25e8",
+    "revision": "686ed1ccc1f2ed98e6a1",
     "url": "/CoolToDo/static/css/main.802a4e50.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/CoolToDo/static/js/2.7c092a6f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "55b92c3f86b818ee25e8",
-    "url": "/CoolToDo/static/js/main.a8d512e2.chunk.js"
+    "revision": "686ed1ccc1f2ed98e6a1",
+    "url": "/CoolToDo/static/js/main.2b51ca2f.chunk.js"
   },
   {
     "revision": "797168c667fb91ca6455",
